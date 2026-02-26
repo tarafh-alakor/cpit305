@@ -50,6 +50,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -74,7 +75,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 500));
+        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel1.setBackground(new java.awt.Color(246, 246, 246));
         jPanel1.setPreferredSize(new java.awt.Dimension(180, 450));
@@ -85,6 +86,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Dashboard");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.setPreferredSize(new java.awt.Dimension(180, 30));
         jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel1.add(jButton2);
@@ -111,6 +113,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton5.setForeground(new java.awt.Color(0, 0, 0));
         jButton5.setText("Contract Management");
         jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.setMinimumSize(new java.awt.Dimension(180, 30));
         jButton5.setPreferredSize(new java.awt.Dimension(180, 30));
         jButton5.addActionListener(this::jButton5ActionPerformed);
@@ -124,10 +127,22 @@ public class Dashboard extends javax.swing.JFrame {
         jButton6.setPreferredSize(new java.awt.Dimension(180, 30));
         jPanel1.add(jButton6);
 
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Log out");
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel13);
+
         getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_START);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setPreferredSize(new java.awt.Dimension(750, 450));
+        jPanel2.setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -149,8 +164,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(100, Short.MAX_VALUE))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -197,7 +212,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +254,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(jLabel7)
                     .addComponent(jLabel6))
-                .addContainerGap(77, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -258,6 +273,11 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel5.setBackground(new java.awt.Color(225, 255, 234));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel5.setForeground(new java.awt.Color(238, 238, 238));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -270,6 +290,12 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 204, 153));
         jLabel11.setText("View details");
+        jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -281,7 +307,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel11)
                     .addComponent(jLabel10)
                     .addComponent(jLabel9))
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,7 +360,7 @@ public class Dashboard extends javax.swing.JFrame {
                             .addComponent(jLabel2)
                             .addComponent(jLabel12)
                             .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 672, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 723, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(365, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -350,7 +376,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -360,10 +386,17 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+         var contract = new Contract();
+        contract.setVisible(true);
+        this.dispose();
+       
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        var dash = new Dashboard();
+        dash.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -373,6 +406,27 @@ public class Dashboard extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
          // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        // TODO add your handling code here:
+        var login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+        var contract = new Contract();
+        contract.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+        var contract = new Contract();
+        contract.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel11MouseClicked
 
     /**
      * @param args the command line arguments
@@ -412,6 +466,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

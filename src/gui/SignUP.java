@@ -57,7 +57,7 @@ public class SignUP extends javax.swing.JFrame {
         jLabel1.setText("Username");
 
         jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setForeground(new java.awt.Color(102, 102, 102));
+        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
@@ -67,8 +67,11 @@ public class SignUP extends javax.swing.JFrame {
         jLabel2.setText("Password");
 
         jButton1.setBackground(new java.awt.Color(0, 204, 153));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Sign in ");
+        jButton1.setText("Create account");
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 204, 153));
@@ -76,10 +79,16 @@ public class SignUP extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 153, 204));
-        jLabel7.setText("Login");
+        jLabel7.setText("<html><u>Login<u><html>");
+        jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+        });
 
         jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setForeground(new java.awt.Color(102, 102, 102));
+        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
         jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
 
@@ -89,7 +98,7 @@ public class SignUP extends javax.swing.JFrame {
         jLabel5.setText("Email Address");
 
         jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setForeground(new java.awt.Color(102, 102, 102));
+        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
         jTextField3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -97,32 +106,30 @@ public class SignUP extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(244, 244, 244)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextField2)
+                        .addComponent(jLabel2)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(35, 35, 35)
+                            .addComponent(jLabel6)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(237, 237, 237)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField2)
-                                .addComponent(jLabel2)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(53, 53, 53)
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jLabel7))
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(328, 328, 328)
+                        .addGap(91, 91, 91)
                         .addComponent(jLabel3)))
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(261, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(76, 76, 76)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
@@ -141,8 +148,8 @@ public class SignUP extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7))
-                .addGap(77, 77, 77))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(84, 84, 84))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,6 +173,21 @@ public class SignUP extends javax.swing.JFrame {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+        var login = new Login(); 
+        login.setVisible(true);
+       
+        this.dispose();
+    }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         var dash = new Dashboard();
+        dash.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,3 +228,4 @@ public class SignUP extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables
 }
+
