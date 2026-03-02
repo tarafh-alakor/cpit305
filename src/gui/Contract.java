@@ -539,7 +539,11 @@ public class Contract extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+      
+       // TODO add your handling code here:
+       var Report = new Report();
+        Report.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -552,8 +556,8 @@ public class Contract extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        var report = new Report();
-        report.setVisible(true);
+        var REPOR = new REPOR();
+        REPOR.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
 

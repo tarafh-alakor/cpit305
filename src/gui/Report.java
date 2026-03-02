@@ -89,6 +89,7 @@ public class Report extends javax.swing.JFrame {
         jButton3.setText("Employee Search & View");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton3.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel2.add(jButton3);
 
         jButton4.setBackground(new java.awt.Color(246, 246, 246));
@@ -113,6 +114,7 @@ public class Report extends javax.swing.JFrame {
         jButton6.setText("Reports");
         jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton6.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel2.add(jButton6);
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -430,6 +432,9 @@ public class Report extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+           var Contract = new Contract();
+        Contract.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -470,6 +475,20 @@ public class Report extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+          var emp = new Employee_Search_View();
+        emp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+          var REPOR = new REPOR();
+        REPOR.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
