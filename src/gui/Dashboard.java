@@ -83,7 +83,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(246, 246, 246));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Dashboard");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -93,7 +92,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(246, 246, 246));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Employee Search & View");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -103,7 +101,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jButton4.setBackground(new java.awt.Color(246, 246, 246));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
         jButton4.setText("Approve Leave");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -113,7 +110,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(246, 246, 246));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(0, 0, 0));
         jButton5.setText("Contract Management");
         jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -124,7 +120,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jButton6.setBackground(new java.awt.Color(246, 246, 246));
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(0, 0, 0));
         jButton6.setText("Reports");
         jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -153,10 +148,8 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("HR Dashboard");
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setText(" Search by Employee ID or Name");
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
@@ -184,7 +177,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Overview");
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -201,11 +193,9 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Total Employees");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("105");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -249,11 +239,9 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel6.setForeground(new java.awt.Color(238, 238, 238));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Pending Leaves");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("14");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -296,11 +284,9 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Active Contracts");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("105");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -341,7 +327,6 @@ public class Dashboard extends javax.swing.JFrame {
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Quick Actions");
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -349,16 +334,13 @@ public class Dashboard extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(0, 204, 153));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("+  Add Employee");
         jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel8.add(jButton1);
 
-        jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(0, 0, 0));
         jButton7.setText("Generate Report");
         jButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

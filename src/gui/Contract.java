@@ -80,7 +80,6 @@ public class Contract extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Contract Management");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -108,37 +107,29 @@ public class Contract extends javax.swing.JFrame {
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Manage Employee Contract");
 
         jLabel10.setBackground(new java.awt.Color(255, 255, 255));
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
         jLabel10.setText("Employee");
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setEditable(true);
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sara Ahmed", "Ali Yasser", "Sultan Ali", "Dana Rakan" }));
         jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
 
         jLabel11.setBackground(new java.awt.Color(255, 255, 255));
         jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Contract Start Date");
 
-        jFormattedTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField1.setForeground(new java.awt.Color(153, 153, 153));
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
         jLabel12.setBackground(new java.awt.Color(255, 255, 255));
         jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Contract End Date");
 
-        jFormattedTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jFormattedTextField2.setForeground(new java.awt.Color(153, 153, 153));
         jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
 
@@ -149,22 +140,17 @@ public class Contract extends javax.swing.JFrame {
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
-        jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton7.setForeground(new java.awt.Color(0, 0, 0));
         jButton7.setText("Cancel");
         jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton7.addActionListener(this::jButton7ActionPerformed);
 
         jLabel23.setBackground(new java.awt.Color(255, 255, 255));
         jLabel23.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(0, 0, 0));
         jLabel23.setText("Contract Type");
 
-        jComboBox2.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox2.setEditable(true);
         jComboBox2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox2.setForeground(new java.awt.Color(0, 0, 0));
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Full Time", "Part Time", "Temporary" }));
         jComboBox2.addActionListener(this::jComboBox2ActionPerformed);
 
@@ -227,12 +213,10 @@ public class Contract extends javax.swing.JFrame {
 
         jLabel14.setBackground(new java.awt.Color(255, 255, 255));
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Recent Contracts Overview");
 
         jLabel15.setBackground(new java.awt.Color(255, 255, 255));
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Sara ahmed");
 
         jLabel16.setBackground(new java.awt.Color(255, 255, 255));
@@ -242,7 +226,6 @@ public class Contract extends javax.swing.JFrame {
 
         jLabel17.setBackground(new java.awt.Color(255, 255, 255));
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Ali Yasser");
 
         jLabel18.setBackground(new java.awt.Color(255, 255, 255));
@@ -252,7 +235,6 @@ public class Contract extends javax.swing.JFrame {
 
         jLabel19.setBackground(new java.awt.Color(255, 255, 255));
         jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setText("Sultan Ali");
 
         jLabel20.setBackground(new java.awt.Color(255, 255, 255));
@@ -262,7 +244,6 @@ public class Contract extends javax.swing.JFrame {
 
         jLabel21.setBackground(new java.awt.Color(255, 255, 255));
         jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(0, 0, 0));
         jLabel21.setText("Dana Rakan");
 
         jLabel22.setBackground(new java.awt.Color(255, 255, 255));
@@ -460,7 +441,6 @@ public class Contract extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(246, 246, 246));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Dashboard");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -470,7 +450,6 @@ public class Contract extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(246, 246, 246));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Employee Search & View");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -480,7 +459,6 @@ public class Contract extends javax.swing.JFrame {
 
         jButton4.setBackground(new java.awt.Color(246, 246, 246));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
         jButton4.setText("Approve Leave");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -490,7 +468,6 @@ public class Contract extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(246, 246, 246));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(0, 0, 0));
         jButton5.setText("Contract Management");
         jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -501,7 +478,6 @@ public class Contract extends javax.swing.JFrame {
 
         jButton6.setBackground(new java.awt.Color(246, 246, 246));
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(0, 0, 0));
         jButton6.setText("Reports");
         jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
