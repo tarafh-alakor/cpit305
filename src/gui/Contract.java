@@ -28,13 +28,6 @@ public class Contract extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jLabel13 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -69,72 +62,16 @@ public class Contract extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 700));
-
-        jPanel1.setBackground(new java.awt.Color(246, 246, 246));
-        jPanel1.setPreferredSize(new java.awt.Dimension(180, 450));
-        jPanel1.setLayout(new java.awt.GridLayout(10, 1));
-
-        jButton2.setBackground(new java.awt.Color(246, 246, 246));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jButton2.setText("Dashboard");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setPreferredSize(new java.awt.Dimension(180, 30));
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-        jPanel1.add(jButton2);
-
-        jButton3.setBackground(new java.awt.Color(246, 246, 246));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jButton3.setText("Employee Search & View");
-        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jButton3.setPreferredSize(new java.awt.Dimension(180, 30));
-        jPanel1.add(jButton3);
-
-        jButton4.setBackground(new java.awt.Color(246, 246, 246));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 0, 0));
-        jButton4.setText("Approve Leave");
-        jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jButton4.setPreferredSize(new java.awt.Dimension(180, 30));
-        jButton4.addActionListener(this::jButton4ActionPerformed);
-        jPanel1.add(jButton4);
-
-        jButton5.setBackground(new java.awt.Color(246, 246, 246));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(0, 0, 0));
-        jButton5.setText("Contract Management");
-        jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jButton5.setMinimumSize(new java.awt.Dimension(180, 30));
-        jButton5.setPreferredSize(new java.awt.Dimension(180, 30));
-        jButton5.addActionListener(this::jButton5ActionPerformed);
-        jPanel1.add(jButton5);
-
-        jButton6.setBackground(new java.awt.Color(246, 246, 246));
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jButton6.setForeground(new java.awt.Color(0, 0, 0));
-        jButton6.setText("Reports");
-        jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
-        jButton6.setPreferredSize(new java.awt.Dimension(180, 30));
-        jPanel1.add(jButton6);
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(204, 0, 0));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Log out");
-        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel13);
-
-        getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_START);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setPreferredSize(new java.awt.Dimension(1000, 700));
@@ -517,30 +454,77 @@ public class Contract extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
+        jPanel1.setBackground(new java.awt.Color(246, 246, 246));
+        jPanel1.setPreferredSize(new java.awt.Dimension(180, 450));
+        jPanel1.setLayout(new java.awt.GridLayout(10, 1));
+
+        jButton2.setBackground(new java.awt.Color(246, 246, 246));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(0, 0, 0));
+        jButton2.setText("Dashboard");
+        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton2.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        jPanel1.add(jButton2);
+
+        jButton3.setBackground(new java.awt.Color(246, 246, 246));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(0, 0, 0));
+        jButton3.setText("Employee Search & View");
+        jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jPanel1.add(jButton3);
+
+        jButton4.setBackground(new java.awt.Color(246, 246, 246));
+        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(0, 0, 0));
+        jButton4.setText("Approve Leave");
+        jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+        jPanel1.add(jButton4);
+
+        jButton5.setBackground(new java.awt.Color(246, 246, 246));
+        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(0, 0, 0));
+        jButton5.setText("Contract Management");
+        jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.setMinimumSize(new java.awt.Dimension(180, 30));
+        jButton5.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+        jPanel1.add(jButton5);
+
+        jButton6.setBackground(new java.awt.Color(246, 246, 246));
+        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
+        jButton6.setText("Reports");
+        jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton6.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton6.addActionListener(this::jButton6ActionPerformed);
+        jPanel1.add(jButton6);
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Log out");
+        jLabel13.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel13MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel13);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_START);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        var dash = new Dashboard();
-        dash.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        // TODO add your handling code here:
-        var login = new Login();
-        login.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel13MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -563,6 +547,46 @@ public class Contract extends javax.swing.JFrame {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        var dash = new Dashboard();
+        dash.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        var emp = new Employee_Search_View();
+        emp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        var contract = new Contract();
+        contract.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        var report = new Report();
+        report.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
+        // TODO add your handling code here:
+        var login = new Login();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel13MouseClicked
 
     /**
      * @param args the command line arguments

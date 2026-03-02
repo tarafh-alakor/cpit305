@@ -96,7 +96,9 @@ public class Dashboard extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Employee Search & View");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton3.addActionListener(this::jButton3ActionPerformed);
         jPanel1.add(jButton3);
 
         jButton4.setBackground(new java.awt.Color(246, 246, 246));
@@ -104,6 +106,7 @@ public class Dashboard extends javax.swing.JFrame {
         jButton4.setForeground(new java.awt.Color(0, 0, 0));
         jButton4.setText("Approve Leave");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.setPreferredSize(new java.awt.Dimension(180, 30));
         jButton4.addActionListener(this::jButton4ActionPerformed);
         jPanel1.add(jButton4);
@@ -124,7 +127,9 @@ public class Dashboard extends javax.swing.JFrame {
         jButton6.setForeground(new java.awt.Color(0, 0, 0));
         jButton6.setText("Reports");
         jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton6.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel1.add(jButton6);
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -189,6 +194,11 @@ public class Dashboard extends javax.swing.JFrame {
         jPanel7.setBackground(new java.awt.Color(225, 255, 234));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jPanel7.setForeground(new java.awt.Color(238, 238, 238));
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel7MouseClicked(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -201,6 +211,12 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 204, 153));
         jLabel5.setText("View details");
+        jLabel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -336,6 +352,8 @@ public class Dashboard extends javax.swing.JFrame {
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setText("+  Add Employee");
         jButton1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel8.add(jButton1);
 
         jButton7.setBackground(new java.awt.Color(255, 255, 255));
@@ -343,6 +361,8 @@ public class Dashboard extends javax.swing.JFrame {
         jButton7.setForeground(new java.awt.Color(0, 0, 0));
         jButton7.setText("Generate Report");
         jButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jButton7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton7.addActionListener(this::jButton7ActionPerformed);
         jPanel8.add(jButton7);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -427,6 +447,48 @@ public class Dashboard extends javax.swing.JFrame {
         contract.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel11MouseClicked
+
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        // TODO add your handling code here:
+        var emp = new Employee_Search_View();
+        emp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel7MouseClicked
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        var emp = new Employee_Search_View();
+        emp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        var addEmp = new Add_Employee();
+        addEmp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+        var report = new Report();
+        report.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        var report = new Report();
+        report.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        var emp = new Employee_Search_View();
+        emp.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
