@@ -10,6 +10,7 @@ public class Add_Employee extends javax.swing.JFrame {
      */
     public Add_Employee() {
         initComponents();
+         jDateChooser1.setDate(null); 
     }
 
     /**
@@ -40,7 +41,7 @@ public class Add_Employee extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jDateChooser1 = new org.netbeans.modules.form.InvalidComponent();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -51,6 +52,7 @@ public class Add_Employee extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1000, 500));
 
         jPanel2.setBackground(new java.awt.Color(246, 246, 246));
         jPanel2.setPreferredSize(new java.awt.Dimension(180, 450));
@@ -58,6 +60,7 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jButton2.setBackground(new java.awt.Color(246, 246, 246));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(0, 0, 0));
         jButton2.setText("Dashboard");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -71,8 +74,10 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jButton3.setBackground(new java.awt.Color(246, 246, 246));
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(0, 0, 0));
         jButton3.setText("Employee Search & View");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
+        jButton3.setPreferredSize(new java.awt.Dimension(180, 30));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -82,6 +87,7 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jButton4.setBackground(new java.awt.Color(246, 246, 246));
         jButton4.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(0, 0, 0));
         jButton4.setText("Approve Leave");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton4.setPreferredSize(new java.awt.Dimension(180, 30));
@@ -94,6 +100,7 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(246, 246, 246));
         jButton5.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(0, 0, 0));
         jButton5.setText("Contract Management");
         jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -108,9 +115,15 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jButton6.setBackground(new java.awt.Color(246, 246, 246));
         jButton6.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(0, 0, 0));
         jButton6.setText("Reports");
         jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         jButton6.setPreferredSize(new java.awt.Dimension(180, 30));
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton6);
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -127,6 +140,7 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("ADD/Update Employee");
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -134,6 +148,7 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Employee Details");
 
         jLabel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -142,8 +157,10 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Employee ID");
 
+        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
         jTextField1.setText("EMP007");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,8 +170,10 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Full Name");
 
+        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
         jTextField2.setText("Reem Sultan");
         jTextField2.setPreferredSize(new java.awt.Dimension(64, 22));
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
@@ -165,8 +184,10 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Department");
 
+        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Human Resources", "Engineering", "IT", "Marketing", "Sales", "Finance", "Operations" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,20 +197,28 @@ public class Add_Employee extends javax.swing.JFrame {
 
         jLabel7.setBackground(new java.awt.Color(255, 255, 255));
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Join Date");
 
-        jDateChooser1.null;
+        jDateChooser1.setBackground(new java.awt.Color(204, 204, 204));
+        jDateChooser1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        jDateChooser1.setForeground(new java.awt.Color(255, 255, 255));
+        jDateChooser1.setToolTipText("");
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Email");
 
+        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
         jTextField3.setText("reem.s@company.com");
 
         jLabel9.setBackground(new java.awt.Color(255, 255, 255));
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Phone Number");
 
+        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
         jTextField4.setText("+996 ");
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -220,7 +249,7 @@ public class Add_Employee extends javax.swing.JFrame {
                         .addGap(47, 47, 47)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2)
+                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,6 +300,7 @@ public class Add_Employee extends javax.swing.JFrame {
             }
         });
 
+        jButton7.setBackground(new java.awt.Color(255, 255, 255));
         jButton7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton7.setForeground(new java.awt.Color(51, 51, 51));
         jButton7.setText("Cancel");
@@ -338,13 +368,16 @@ public class Add_Employee extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        var dash = new Dashboard();
-        dash.setVisible(true);
+        var Dashboard = new Dashboard();
+        Dashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        var LeaveRequests = new LeaveRequests();
+        LeaveRequests.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -380,15 +413,32 @@ public class Add_Employee extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        var dashboard = new Dashboard();
+        dashboard.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        var dashboard = new Dashboard();
+        dashboard.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        var Employee_Search_View = new Employee_Search_View();
+        Employee_Search_View.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        var REPOR = new REPOR();
+        REPOR.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -424,7 +474,7 @@ public class Add_Employee extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
-    private org.netbeans.modules.form.InvalidComponent jDateChooser1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
