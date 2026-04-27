@@ -20,9 +20,40 @@ public class LeaveRequests extends javax.swing.JFrame {
         ActionsCell.apply(jTable1, 6);
             jTable1.getColumnModel().getColumn(6).setMinWidth(180);
     jTable1.getColumnModel().getColumn(6).setMaxWidth(220);
+     loadLeaveRequests();
     
     }
+    
+    private void loadLeaveRequests() {
+        try {
+            java.sql.Connection con = database.DBConnection.getConnection();
 
+            String sql = "SELECT * FROM leave_requests";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery();
+
+            javax.swing.table.DefaultTableModel model
+                    = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("leave_id"),
+                    rs.getString("emp_name"),
+                    rs.getString("leave_type"),
+                    rs.getString("leave_date"),
+                    rs.getInt("total_days"),
+                    rs.getString("status")
+                });
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

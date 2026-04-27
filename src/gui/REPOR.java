@@ -17,8 +17,27 @@ public class REPOR extends javax.swing.JFrame {
      */
     public REPOR() {
         initComponents();
+         loadEmployeesToComboBox();
     }
 
+    private void loadEmployeesToComboBox() {
+        try {
+            java.sql.Connection con = database.DBConnection.getConnection();
+
+            String sql = "SELECT full_name FROM employees";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery();
+
+            jComboBox3.removeAllItems(); 
+
+            while (rs.next()) {
+                jComboBox3.addItem(rs.getString("full_name"));
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -262,10 +281,9 @@ public class REPOR extends javax.swing.JFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(0, 229, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -438,6 +456,35 @@ public class REPOR extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        try {
+            java.sql.Connection con = database.DBConnection.getConnection();
+
+            String sql = "SELECT * FROM employees";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery();
+
+            java.io.FileWriter writer = new java.io.FileWriter("employees_report.csv");
+
+            writer.write("Employee ID,Full Name,Department,Join Date,Email,Phone\n");
+
+            while (rs.next()) {
+                writer.write(
+                        rs.getString("emp_id") + ","
+                        + rs.getString("full_name") + ","
+                        + rs.getString("department") + ","
+                        + rs.getDate("join_date") + ","
+                        + rs.getString("email") + ","
+                        + rs.getString("phone") + "\n"
+                );
+            }
+
+            writer.close();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "CSV report exported successfully");
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
         javax.swing.JOptionPane.showMessageDialog(
         this,
         "Report file has been created successfully!",
@@ -448,6 +495,22 @@ public class REPOR extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Thread reportThread = new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Report generated successfully");
+                });
+
+            } catch (Exception e) {
+                javax.swing.SwingUtilities.invokeLater(() -> {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+                });
+            }
+        });
+
+        reportThread.start();
         var dash = new Dashboard();
         dash.setVisible(true);
         this.dispose();

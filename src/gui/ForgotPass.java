@@ -148,9 +148,34 @@ public class ForgotPass extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        var conPass = new confirmPass();
-        conPass.setVisible(true);
-        this.dispose();
+        
+        try {
+            String email = jTextField3.getText();
+
+            if (email.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Enter your email");
+                return;
+            }
+
+            java.sql.Connection con = database.DBConnection.getConnection();
+
+            String sql = "SELECT * FROM users WHERE email=?";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+
+            java.sql.ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                new confirmPass().setVisible(true);
+                this.dispose();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Email not found");
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

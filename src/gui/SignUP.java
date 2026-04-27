@@ -184,9 +184,47 @@ public class SignUP extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         var dash = new Dashboard();
-        dash.setVisible(true);
-        this.dispose();
+        try {
+            String username = jTextField1.getText();
+            String email = jTextField3.getText();
+            String password = jTextField2.getText();
+
+            if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please fill all fields");
+                return;
+            }
+
+            if (!email.contains("@")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid email address");
+                return;
+            }
+
+            if (password.length() < 6) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Password must be at least 6 characters");
+                return;
+            }
+
+            java.sql.Connection con = database.DBConnection.getConnection();
+
+            String sql = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, email);
+            ps.setString(3, password);
+
+            ps.executeUpdate();
+
+            javax.swing.JOptionPane.showMessageDialog(this, "Account created successfully");
+
+            new Login().setVisible(true);
+            this.dispose();
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+//         var dash = new Dashboard();
+//        dash.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

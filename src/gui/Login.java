@@ -227,9 +227,40 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        var dash = new Dashboard();
-        dash.setVisible(true);
-        this.dispose();
+        try {
+            String username = jTextField1.getText();
+            String password = jTextField2.getText();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Enter username and password");
+                return;
+            }
+
+            java.sql.Connection con = database.DBConnection.getConnection();
+
+            String sql = "SELECT * FROM users WHERE username=? AND password=?";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            java.sql.ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Login successful");
+                new Dashboard().setVisible(true);
+                this.dispose();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid username or password");
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+        
+      //  var dash = new Dashboard();
+//        dash.setVisible(true);
+//        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked

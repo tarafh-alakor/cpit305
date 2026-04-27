@@ -19,7 +19,41 @@ public class Employee_Search_View extends javax.swing.JFrame {
         initComponents();
        EmployeeActionsCell.apply(jTable1, 5);
        jTable1.getColumnModel().getColumn(5).setPreferredWidth(220);
+        loadEmployees("");
     }
+    
+    private void loadEmployees(String keyword) {
+    try {
+        java.sql.Connection con = database.DBConnection.getConnection();
+
+        String sql = "SELECT * FROM employees WHERE emp_id LIKE ? OR full_name LIKE ?";
+        java.sql.PreparedStatement ps = con.prepareStatement(sql);
+
+        ps.setString(1, keyword + "%");
+        ps.setString(2, keyword + "%");
+
+        java.sql.ResultSet rs = ps.executeQuery();
+
+        javax.swing.table.DefaultTableModel model =
+                (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+        model.setRowCount(0);
+
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getString("emp_id"),
+                rs.getString("full_name"),
+                rs.getString("department"),
+                rs.getDate("join_date"),
+                rs.getString("email"),
+                rs.getString("phone")
+            });
+        }
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,7 +88,6 @@ public class Employee_Search_View extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 500));
@@ -72,6 +105,11 @@ public class Employee_Search_View extends javax.swing.JFrame {
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
+            }
+        });
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
             }
         });
 
@@ -240,6 +278,8 @@ public class Employee_Search_View extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
+        String keyword = jTextField1.getText();
+        loadEmployees(keyword);
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
@@ -289,6 +329,12 @@ public class Employee_Search_View extends javax.swing.JFrame {
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel13MouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        // TODO add your handling code here:
+         String keyword = jTextField1.getText();
+        loadEmployees(keyword);
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
