@@ -4,6 +4,8 @@
  */
 package gui;
 
+import database.DBSetup;
+
 /**
  *
  * @author mawad
@@ -15,6 +17,9 @@ public class GUI {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-           java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
+        //Database setup
+        DBSetup.setupDatabase();
+        //run GUI
+        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
     }
 }
