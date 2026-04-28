@@ -15,15 +15,14 @@ import java.net.Socket;
 public class HRClient {
 
     public static void sendNotification(String message) {
-        try {
-            Socket socket = new Socket("localhost", 5000);
+            try(Socket socket = new Socket("localhost", 5000)){
 
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-            writer.println(message);
+            
+            writer.println("Notification received: "+message);
 
-            socket.close();
 
-        } catch (Exception e) {
+            }catch (Exception e) {
             System.out.println("Notification error: " + e.getMessage());
         }
     }

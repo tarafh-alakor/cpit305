@@ -9,7 +9,7 @@ package gui;
  * @author mawad
  */
 public class SignUP extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(SignUP.class.getName());
 
     /**
@@ -176,9 +176,9 @@ public class SignUP extends javax.swing.JFrame {
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
-        var login = new Login(); 
+        var login = new Login();
         login.setVisible(true);
-       
+
         this.dispose();
     }//GEN-LAST:event_jLabel7MouseClicked
 
@@ -194,18 +194,31 @@ public class SignUP extends javax.swing.JFrame {
                 return;
             }
 
-            if (!email.contains("@")) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Invalid email address");
+            String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+
+            if (!email.matches(emailRegex)) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Invalid email format");
                 return;
             }
 
-            if (password.length() < 6) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Password must be at least 6 characters");
+            String passwordRegex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$";
+
+            if (!password.matches(passwordRegex)) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Password must be at least 6 characters and include letters and numbers");
                 return;
             }
 
             java.sql.Connection con = database.DBConnection.getConnection();
-
+            //Check if account already exisits
+            String checkSql = "SELECT * FROM USERS WHERE usernsame = ?";
+            java.sql.PreparedStatement checkPs = con.prepareStatement(checkSql);
+            checkPs.setString(1, username);
+            java.sql.ResultSet rs = checkPs.executeQuery();
+            if (rs.next()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Username already exists");
+            }
+            //Insert user (if account doesn't exists)
             String sql = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
             java.sql.PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, username);

@@ -6,6 +6,8 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import network.HRClient;
+import utils.LoggerUtil;
 
 /**
  *
@@ -248,6 +250,9 @@ public class Login extends javax.swing.JFrame {
 
             if (rs.next()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Login successful");
+                
+                HRClient.sendNotification("User logged in: "+ username);
+                LoggerUtil.log("login.txt", "User logged in: "+ username);
                 new Dashboard().setVisible(true);
                 this.dispose();
             } else {
