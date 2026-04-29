@@ -11,14 +11,21 @@ import javax.swing.JOptionPane;
  * @author mawad
  */
 public class Contract extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Contract.class.getName());
+    private String empId;
 
     /**
      * Creates new form Contract
      */
+    public Contract(String empId) {
+        initComponents();
+        this.empId = empId;
+    }
+
     public Contract() {
         initComponents();
+        loadContracts();
     }
 
     /**
@@ -495,34 +502,107 @@ public class Contract extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void loadContracts() {
+        try {
+            java.sql.Connection con = database.DBConnection.getConnection();
 
+            String sql = "SELECT * FROM contracts ORDER BY end_date DESC LIMIT 4";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery();
+
+            int i = 0;
+
+            while (rs.next() && i < 4) {
+                String name = rs.getString("emp_name");
+                java.sql.Date endDate = rs.getDate("end_date");
+
+                String status = getStatus(endDate);
+
+                // 👇 Replace YOUR labels here
+                if (i == 0) {
+                    jLabel15.setText(name);
+                    jLabel16.setText("Ends: " + endDate);
+                    jLabel4.setText(status);
+                } else if (i == 1) {
+                    jLabel17.setText(name);
+                    jLabel18.setText("Ends: " + endDate);
+                    jLabel7.setText(status);
+                } else if (i == 2) {
+                    jLabel19.setText(name);
+                    jLabel20.setText("Ends: " + endDate);
+                    jLabel9.setText(status);
+                } else if (i == 3) {
+                    jLabel21.setText(name);
+                    jLabel22.setText("Ends: " + endDate);
+                    jLabel11.setText(status);
+                }
+
+                i++;
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error loading contracts: " + e.getMessage());
+        }
+    }
+
+    private String getStatus(java.sql.Date endDate) {
+        java.time.LocalDate today = java.time.LocalDate.now();
+        java.time.LocalDate end = endDate.toLocalDate();
+
+        if (end.isBefore(today)) {
+            return "Expired";
+        } else if (end.isBefore(today.plusDays(30))) {
+            return "Expiring Soon";
+        } else {
+            return "Active";
+        }
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-       try {
-    String startText = jTextField1.getText();
-    String endText = jTextField2.getText();
+        try {
+            String empName = jTextField3.getText().trim();
+            String contractType = jComboBox2.getSelectedItem().toString();
+            String startText = jTextField1.getText().trim();
+            String endText = jTextField2.getText().trim();
 
-    java.sql.Date startDate = java.sql.Date.valueOf(startText);
-    java.sql.Date endDate = java.sql.Date.valueOf(endText);
-    java.sql.Connection con = database.DBConnection.getConnection();
+            java.sql.Date startDate = java.sql.Date.valueOf(startText);
+            java.sql.Date endDate = java.sql.Date.valueOf(endText);
+            if(endDate.before(startDate)){
+                JOptionPane.showMessageDialog(this, "End date must be after start date");
+                return;
+            }
+            java.sql.Connection con = database.DBConnection.getConnection();
 
-    String sql = "INSERT INTO contracts(emp_name, contract_type, start_date, end_date, status) VALUES (?, ?, ?, ?, ?)";
-    java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            String sql = "INSERT INTO contracts(emp_name, contract_type, start_date, end_date, status) VALUES (?, ?, ?, ?, ?)";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
 
-    ps.setString(1, jTextField3.getText());
-    ps.setString(2, jComboBox2.getSelectedItem().toString());
-    ps.setDate(3, startDate);
-    ps.setDate(4, endDate);
-    ps.setString(5, "Active");
+            ps.setString(1, empName);
+            ps.setString(2, contractType);
+            ps.setDate(3, startDate);
+            ps.setDate(4, endDate);
+            ps.setString(5, "Active");
 
-    ps.executeUpdate();
+            ps.executeUpdate();
 
-    JOptionPane.showMessageDialog(this, "Contract saved successfully");
+            JOptionPane.showMessageDialog(this, "Contract saved successfully");
+            
+            //Networking
+            network.HRClient.sendNotification("Contract updated for employee: " + empName);
+            //Logging
+            utils.LoggerUtil.log("contract.txt", "Contract updated for: " + empName);
+            // Clear fields
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
 
-} catch (Exception e) {
-    javax.swing.JOptionPane.showMessageDialog(this, "Invalid date format. Use YYYY-MM-DD");
-}
-       
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid date. Use format YYYY-MM-DD (example: 2025-05-01)");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Unexpected error: " + e.getMessage());
+        }
 //        var dash = new Dashboard();
 //        dash.setVisible(true);
 //        this.dispose();

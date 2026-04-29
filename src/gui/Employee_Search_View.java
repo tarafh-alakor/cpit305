@@ -29,8 +29,8 @@ public class Employee_Search_View extends javax.swing.JFrame {
         String sql = "SELECT * FROM employees WHERE emp_id LIKE ? OR full_name LIKE ?";
         java.sql.PreparedStatement ps = con.prepareStatement(sql);
 
-        ps.setString(1, keyword + "%");
-        ps.setString(2, keyword + "%");
+        ps.setString(1, "%" + keyword + "%");
+        ps.setString(2, "%" + keyword + "%");
 
         java.sql.ResultSet rs = ps.executeQuery();
 
@@ -45,13 +45,13 @@ public class Employee_Search_View extends javax.swing.JFrame {
                 rs.getString("full_name"),
                 rs.getString("department"),
                 rs.getDate("join_date"),
-                rs.getString("email"),
-                rs.getString("phone")
+                rs.getString("email") + " / " + rs.getString("phone"),
+                "Actions"
             });
         }
 
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        javax.swing.JOptionPane.showMessageDialog(this, "Error loding employees: " + e.getMessage());
     }
 }
 

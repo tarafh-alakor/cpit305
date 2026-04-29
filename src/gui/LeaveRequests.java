@@ -18,18 +18,43 @@ public class LeaveRequests extends javax.swing.JFrame {
     public LeaveRequests() {
         initComponents();
         ActionsCell.apply(jTable1, 6);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(180);
-    jTable1.getColumnModel().getColumn(6).setMaxWidth(220);
-     loadLeaveRequests();
-    
+        jTable1.getColumnModel().getColumn(6).setMinWidth(180);
+        jTable1.getColumnModel().getColumn(6).setMaxWidth(220);
+        loadLeaveRequests();
+
     }
-    
+
     private void loadLeaveRequests() {
         try {
             java.sql.Connection con = database.DBConnection.getConnection();
+     
+            String keyword = jTextField1.getText().trim();
+            String type = jComboBox1.getSelectedItem().toString();
+            String status = jComboBox2.getSelectedItem().toString();
 
-            String sql = "SELECT * FROM leave_requests";
+            String sql = "SELECT * FROM leave_requests WHERE emp_name LIKE ?";
+
+            // Dynamic filters
+            if (!type.equals("Leave Type")) {
+                sql += " AND leave_type = ?";
+            }
+
+            if (!status.equals("Status")) {
+                sql += " AND status = ?";
+            }
             java.sql.PreparedStatement ps = con.prepareStatement(sql);
+
+            int index = 1;
+            ps.setString(index++, "%" + keyword + "%");
+
+            if (!type.equals("Leave Type")) {
+                ps.setString(index++, type);
+            }
+
+            if (!status.equals("Status")) {
+                ps.setString(index++, status);
+            }
+            
             java.sql.ResultSet rs = ps.executeQuery();
 
             javax.swing.table.DefaultTableModel model
@@ -38,18 +63,22 @@ public class LeaveRequests extends javax.swing.JFrame {
             model.setRowCount(0);
 
             while (rs.next()) {
+ 
+                String dateRange = rs.getDate("start_date") + " - " + rs.getDate("end_date");
+
                 model.addRow(new Object[]{
-                    rs.getInt("leave_id"),
+                    rs.getInt("id"), // FIXED column name
                     rs.getString("emp_name"),
                     rs.getString("leave_type"),
-                    rs.getString("leave_date"),
+                    dateRange,
                     rs.getInt("total_days"),
-                    rs.getString("status")
+                    rs.getString("status"),
+                    "Actions"
                 });
             }
 
         } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Error loading leave requests: " + e.getMessage());
         }
     }
     
