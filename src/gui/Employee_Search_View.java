@@ -4,6 +4,8 @@
  */
 package gui;
 
+import java.awt.Color;
+
 /**
  *
  * @author Huawei
@@ -20,6 +22,7 @@ public class Employee_Search_View extends javax.swing.JFrame {
        EmployeeActionsCell.apply(jTable1, 5);
        jTable1.getColumnModel().getColumn(5).setPreferredWidth(220);
         loadEmployees("");
+        
     }
     
     private void loadEmployees(String keyword) {
@@ -29,8 +32,8 @@ public class Employee_Search_View extends javax.swing.JFrame {
         String sql = "SELECT * FROM employees WHERE emp_id LIKE ? OR full_name LIKE ?";
         java.sql.PreparedStatement ps = con.prepareStatement(sql);
 
-        ps.setString(1, "%" + keyword + "%");
-        ps.setString(2, "%" + keyword + "%");
+        ps.setString(1, keyword + "%");
+        ps.setString(2,  keyword + "%");
 
         java.sql.ResultSet rs = ps.executeQuery();
 
@@ -51,7 +54,7 @@ public class Employee_Search_View extends javax.swing.JFrame {
         }
 
     } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error loding employees: " + e.getMessage());
+        javax.swing.JOptionPane.showMessageDialog(this, "Error loading employees: " + e.getMessage());
     }
 }
 
@@ -100,8 +103,16 @@ public class Employee_Search_View extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Manage Employee personal, contact, and employement information");
 
-        jTextField1.setText(" Search by Employee ID or Name");
+        jTextField1.setText("Search by Employee ID or Name");
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -127,12 +138,7 @@ public class Employee_Search_View extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"EMP001", "Latifa Khalid", "Finacne", "2022-02-28", "latifa.k@company.com", null},
-                {"EMP002", "Dana Mubarak", "Marketing", "2021-07-01", "dana.m@comapny.com", null},
-                {"EMP003", "Ali Mohamed", "Human Resources", "2020-01-15", "ali.m@company", null},
-                {"EMP004", "Fahad Nasser", "Operations", "2020-09-05", "fahad.n@company.com", null},
-                {"EMP005", "Sara Ahmed", "Engineering", "2019-03-22", "sara.a@ahmed.com", null},
-                {"EMP006", "Rakan Faisal", "Sales", "2018-11-10", "rakan.f@comapny.com", null}
+
             },
             new String [] {
                 "Employee ID", "Name", "Department", "Join Date", "Contact Info", "Actions"
@@ -332,9 +338,29 @@ public class Employee_Search_View extends javax.swing.JFrame {
 
     private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
         // TODO add your handling code here:
-         String keyword = jTextField1.getText();
-        loadEmployees(keyword);
+        String keyword = jTextField1.getText().trim();
+
+        if (!keyword.equals("Search by Employee ID or Name")) {
+            loadEmployees(keyword);
+        }
     }//GEN-LAST:event_jTextField1KeyReleased
+
+    private void jTextField1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusGained
+        // TODO add your handling code here:
+        if (jTextField1.getText().trim().equals("Search by Employee ID or Name")) {
+            jTextField1.setText("");
+            jTextField1.setForeground(Color.BLACK);
+
+        }
+    }//GEN-LAST:event_jTextField1FocusGained
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        // TODO add your handling code here:
+        if (jTextField1.getText().trim().isEmpty()) {
+            jTextField1.setText("Search by Employee ID or Name");
+            jTextField1.setForeground(Color.GRAY);
+        }
+    }//GEN-LAST:event_jTextField1FocusLost
 
     /**
      * @param args the command line arguments

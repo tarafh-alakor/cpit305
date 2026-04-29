@@ -1,6 +1,8 @@
 
 package gui;
 
+import javax.swing.JOptionPane;
+
 public class Add_Employee extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Add_Employee.class.getName());
@@ -10,7 +12,7 @@ public class Add_Employee extends javax.swing.JFrame {
      */
     public Add_Employee() {
         initComponents();
-         jDateChooser1.setDate(null); 
+       // jDateChooser1.setDate(null); 
     }
 
     /**
@@ -45,7 +47,7 @@ public class Add_Employee extends javax.swing.JFrame {
         jTextField3 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        jTextField5 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
 
@@ -221,8 +223,6 @@ public class Add_Employee extends javax.swing.JFrame {
             }
         });
 
-        jDateChooser1.setBackground(new java.awt.Color(204, 204, 204));
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -250,7 +250,7 @@ public class Add_Employee extends javax.swing.JFrame {
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField4)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(jTextField5))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -259,24 +259,23 @@ public class Add_Employee extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
@@ -415,11 +414,16 @@ public class Add_Employee extends javax.swing.JFrame {
             String empId = jTextField1.getText();
             String fullName = jTextField2.getText();
             String department = jComboBox1.getSelectedItem().toString();
-            java.util.Date date = jDateChooser1.getDate();
+           // java.util.Date date = jDateChooser1.getDate();
+           String date = jTextField5.getText();
             String email = jTextField3.getText();
             String phone = jTextField4.getText();
             //Empty validation
-            if (empId.isEmpty() || fullName.isEmpty() || date == null || email.isEmpty() || phone.isEmpty()) {
+//            if (empId.isEmpty() || fullName.isEmpty() || date == null || email.isEmpty() || phone.isEmpty()) {
+//                javax.swing.JOptionPane.showMessageDialog(this, "Please fill all fields");
+//                return;
+//            }
+            if (empId.isEmpty() || fullName.isEmpty() || date.isEmpty() || email.isEmpty() || phone.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Please fill all fields");
                 return;
             }
@@ -436,8 +440,23 @@ public class Add_Employee extends javax.swing.JFrame {
                 javax.swing.JOptionPane.showMessageDialog(this, "Phone must be in format: 05XXXXXXXX");
                 return;
             }
+            
+            if (date.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Enter date (YYYY-MM-DD)");
+                return;
+            }
 
-            java.sql.Date joinDate = new java.sql.Date(date.getTime());
+            java.sql.Date joinDate;
+
+            try {
+                joinDate = java.sql.Date.valueOf(date);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Date must be YYYY-MM-DD");
+                return;
+            }
+
+            //java.sql.Date joinDate = new java.sql.Date(date.getTime());
+           
 
             java.sql.Connection con = database.DBConnection.getConnection();
             //Prevent dublicate employee ID
@@ -445,6 +464,10 @@ public class Add_Employee extends javax.swing.JFrame {
             java.sql.PreparedStatement checkPs = con.prepareStatement(checkSql);
             checkPs.setString(1, empId);
             java.sql.ResultSet rs = checkPs.executeQuery();
+            if (rs.next()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Employee ID already exists");
+                return;
+            }
             //Insert employee (if empId doesn't exists)
             String sql = "INSERT INTO employees(emp_id, full_name, department, join_date, email, phone) VALUES (?, ?, ?, ?, ?, ?)";
             java.sql.PreparedStatement ps = con.prepareStatement(sql);
@@ -528,7 +551,6 @@ public class Add_Employee extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -546,5 +568,6 @@ public class Add_Employee extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

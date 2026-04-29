@@ -211,12 +211,14 @@ public class SignUP extends javax.swing.JFrame {
 
             java.sql.Connection con = database.DBConnection.getConnection();
             //Check if account already exisits
-            String checkSql = "SELECT * FROM USERS WHERE usernsame = ?";
+            String checkSql = "SELECT * FROM users WHERE username=?";
             java.sql.PreparedStatement checkPs = con.prepareStatement(checkSql);
             checkPs.setString(1, username);
             java.sql.ResultSet rs = checkPs.executeQuery();
+
             if (rs.next()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Username already exists");
+                return;
             }
             //Insert user (if account doesn't exists)
             String sql = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
@@ -229,15 +231,13 @@ public class SignUP extends javax.swing.JFrame {
 
             javax.swing.JOptionPane.showMessageDialog(this, "Account created successfully");
 
-            new Login().setVisible(true);
+            new Dashboard().setVisible(true);
             this.dispose();
 
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-//         var dash = new Dashboard();
-//        dash.setVisible(true);
-//        this.dispose();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

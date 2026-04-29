@@ -72,11 +72,37 @@ public class ActionsCell {
             panel.add(deny);
         }
 
+//        private void action(String status) {
+//            int row = table.getSelectedRow();
+//
+//            // تغيير حالة الطلب في العمود Status (رقمه 5)
+//            table.setValueAt(status, row, 5);
+//
+//            fireEditingStopped();
+//        }
         private void action(String status) {
             int row = table.getSelectedRow();
 
-            // تغيير حالة الطلب في العمود Status (رقمه 5)
-            table.setValueAt(status, row, 5);
+            int id = (int) table.getValueAt(row, 0); // ID من أول عمود
+
+            try {
+                java.sql.Connection con = database.DBConnection.getConnection();
+
+                String sql = "UPDATE leave_requests SET status=? WHERE id=?";
+                java.sql.PreparedStatement ps = con.prepareStatement(sql);
+
+                ps.setString(1, status);
+                ps.setInt(2, id);
+
+                ps.executeUpdate();
+                // تحديث الجدول
+                table.setValueAt(status, row, 5);
+
+                javax.swing.JOptionPane.showMessageDialog(null, "Status updated!");
+
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+            }
 
             fireEditingStopped();
         }

@@ -14,9 +14,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/hr_system";
-    private static final String USER = "root"; // change to your MySQL username, HRsystemDB
-    private static final String PASSWORD = "root"; // change to your MySQL password, HR_system
+    private static final String URL = "jdbc:mysql://127.0.0.1:3306/hr_system";
+    private static final String USER = "HRsystemDB"; // change to your MySQL username, HRsystemDB
+    private static final String PASSWORD = "HR_system"; // change to your MySQL password, HR_system
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);

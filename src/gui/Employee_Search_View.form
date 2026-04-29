@@ -113,7 +113,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField1">
           <Properties>
-            <Property name="text" type="java.lang.String" value=" Search by Employee ID or Name"/>
+            <Property name="text" type="java.lang.String" value="Search by Employee ID or Name"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
                 <LineBorder/>
@@ -121,6 +121,8 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField1FocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextField1FocusLost"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextField1ActionPerformed"/>
             <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField1KeyReleased"/>
           </Events>
@@ -162,47 +164,12 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="6" rowCount="6">
-                    <Column editable="true" title="Employee ID" type="java.lang.String">
-                      <Data value="EMP001"/>
-                      <Data value="EMP002"/>
-                      <Data value="EMP003"/>
-                      <Data value="EMP004"/>
-                      <Data value="EMP005"/>
-                      <Data value="EMP006"/>
-                    </Column>
-                    <Column editable="true" title="Name" type="java.lang.String">
-                      <Data value="Latifa Khalid"/>
-                      <Data value="Dana Mubarak"/>
-                      <Data value="Ali Mohamed"/>
-                      <Data value="Fahad Nasser"/>
-                      <Data value="Sara Ahmed"/>
-                      <Data value="Rakan Faisal"/>
-                    </Column>
-                    <Column editable="true" title="Department" type="java.lang.String">
-                      <Data value="Finacne"/>
-                      <Data value="Marketing"/>
-                      <Data value="Human Resources"/>
-                      <Data value="Operations"/>
-                      <Data value="Engineering"/>
-                      <Data value="Sales"/>
-                    </Column>
-                    <Column editable="true" title="Join Date" type="java.lang.Object">
-                      <Data value="2022-02-28"/>
-                      <Data value="2021-07-01"/>
-                      <Data value="2020-01-15"/>
-                      <Data value="2020-09-05"/>
-                      <Data value="2019-03-22"/>
-                      <Data value="2018-11-10"/>
-                    </Column>
-                    <Column editable="true" title="Contact Info" type="java.lang.String">
-                      <Data value="latifa.k@company.com"/>
-                      <Data value="dana.m@comapny.com"/>
-                      <Data value="ali.m@company"/>
-                      <Data value="fahad.n@company.com"/>
-                      <Data value="sara.a@ahmed.com"/>
-                      <Data value="rakan.f@comapny.com"/>
-                    </Column>
+                  <Table columnCount="6" rowCount="0">
+                    <Column editable="true" title="Employee ID" type="java.lang.String"/>
+                    <Column editable="true" title="Name" type="java.lang.String"/>
+                    <Column editable="true" title="Department" type="java.lang.String"/>
+                    <Column editable="true" title="Join Date" type="java.lang.Object"/>
+                    <Column editable="true" title="Contact Info" type="java.lang.String"/>
                     <Column editable="true" title="Actions" type="java.lang.Object"/>
                   </Table>
                 </Property>
