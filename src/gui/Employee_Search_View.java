@@ -19,8 +19,8 @@ public class Employee_Search_View extends javax.swing.JFrame {
      */
     public Employee_Search_View() {
         initComponents();
-       EmployeeActionsCell.apply(jTable1, 5);
-       jTable1.getColumnModel().getColumn(5).setPreferredWidth(220);
+     //  EmployeeActionsCell.apply(jTable1, 4);
+      // jTable1.getColumnModel().getColumn(4).setPreferredWidth(220);
         loadEmployees("");
         
     }
@@ -48,8 +48,9 @@ public class Employee_Search_View extends javax.swing.JFrame {
                 rs.getString("full_name"),
                 rs.getString("department"),
                 rs.getDate("join_date"),
-                rs.getString("email") + " / " + rs.getString("phone"),
-                "Actions"
+                rs.getString("email"),
+                rs.getString("phone"),
+             
             });
         }
 
@@ -91,6 +92,7 @@ public class Employee_Search_View extends javax.swing.JFrame {
         });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 500));
@@ -141,11 +143,11 @@ public class Employee_Search_View extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Employee ID", "Name", "Department", "Join Date", "Contact Info", "Actions"
+                "Employee ID", "Name", "Department", "Join Date", "Email", "Phone"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {

@@ -50,12 +50,13 @@ public class DBSetup {
             """);
             st.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS contracts (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    emp_name VARCHAR(100),
+                    contract_id INT AUTO_INCREMENT PRIMARY KEY,
+                    emp_id VARCHAR(20),
                     contract_type VARCHAR(50),
                     start_date DATE,
                     end_date DATE,
                     status VARCHAR(20)
+                    FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
                 )
             """);
 

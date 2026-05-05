@@ -4,6 +4,8 @@
  */
 package gui;
 
+import java.io.FileWriter;
+
 /**
  *
  * @author welcome
@@ -28,8 +30,7 @@ public class REPOR extends javax.swing.JFrame {
             java.sql.PreparedStatement ps = con.prepareStatement(sql);
             java.sql.ResultSet rs = ps.executeQuery();
 
-            jComboBox3.removeAllItems(); 
-
+          
             while (rs.next()) {
                 jComboBox3.addItem(rs.getString("full_name"));
             }
@@ -173,7 +174,7 @@ public class REPOR extends javax.swing.JFrame {
 
         jComboBox3.setEditable(true);
         jComboBox3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "EMP001 - Sara Ahmed", "EMP002 - Ali Mohamed", "EMP003 - Dana Mubarak", "EMP004 - Rakan Faisal", "EMP005 - Latifa Khalid" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
         jComboBox3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox3ActionPerformed(evt);
@@ -182,7 +183,7 @@ public class REPOR extends javax.swing.JFrame {
 
         jComboBox4.setEditable(true);
         jComboBox4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "HR", "Finance", "Sales", "IT", "Engineering", "Operations", "Admin" }));
+        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "HR", "Finance", "Sales", "IT", "Engineering", "Operations", "Admin" }));
         jComboBox4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox4ActionPerformed(evt);
@@ -452,78 +453,203 @@ public class REPOR extends javax.swing.JFrame {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
+        String type = jComboBox2.getSelectedItem().toString();
+
+        boolean needsDate = !type.equals("Employee Report");
+
+        jFormattedTextField1.setEnabled(needsDate);
+        jFormattedTextField2.setEnabled(needsDate);
+        jLabel11.setEnabled(needsDate);
+        jLabel12.setEnabled(needsDate);
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        try {
-            java.sql.Connection con = database.DBConnection.getConnection();
+    try {
+        java.sql.Connection con = database.DBConnection.getConnection();
 
-            String sql = "SELECT * FROM employees";
-            java.sql.PreparedStatement ps = con.prepareStatement(sql);
-            java.sql.ResultSet rs = ps.executeQuery();
+        String employee = jComboBox3.getSelectedItem().toString();
+        String department = jComboBox4.getSelectedItem().toString();
 
-            java.io.FileWriter writer = new java.io.FileWriter("employees_report.csv");
+        String sql;
+        java.sql.PreparedStatement ps;
 
-            writer.write("Employee ID,Full Name,Department,Join Date,Email,Phone\n");
+        if (employee != null && !employee.equals("All") && !employee.trim().isEmpty()) {
 
-            while (rs.next()) {
-                writer.write(
-                        rs.getString("emp_id") + ","
-                        + rs.getString("full_name") + ","
-                        + rs.getString("department") + ","
-                        + rs.getDate("join_date") + ","
-                        + rs.getString("email") + ","
-                        + rs.getString("phone") + "\n"
-                );
+            sql = "SELECT * FROM employees WHERE full_name = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, employee);
+
+        } else {
+
+            sql = "SELECT * FROM employees WHERE 1=1";
+
+            if (department != null && !department.equals("All") && !department.trim().isEmpty()) {
+                sql += " AND department = ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, department);
+            } else {
+                ps = con.prepareStatement(sql);
             }
-
-            writer.close();
-
-            javax.swing.JOptionPane.showMessageDialog(this, "CSV report exported successfully");
-
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-        javax.swing.JOptionPane.showMessageDialog(
-        this,
-        "Report file has been created successfully!",
-        "Success",
-        javax.swing.JOptionPane.INFORMATION_MESSAGE
-);
+
+        java.sql.ResultSet rs = ps.executeQuery();
+
+        java.io.FileWriter writer = new java.io.FileWriter("HR_Report.csv");
+
+        writer.write("ID,Name,Department,Join Date,Email,Phone\n");
+
+        int count = 0;
+
+        while (rs.next()) {
+            writer.write(
+                rs.getString("emp_id") + "," +
+                rs.getString("full_name") + "," +
+                rs.getString("department") + "," +
+                rs.getString("join_date") + "," +
+                rs.getString("email") + "," +
+                rs.getString("phone") + "\n"
+            );
+            count++;
+        }
+
+        writer.write("\nTotal Employees," + count);
+
+        writer.close();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "CSV exported!");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
+    }
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Thread reportThread = new Thread(() -> {
-            try {
-                Thread.sleep(1000);
+    try {
+        java.sql.Connection con = database.DBConnection.getConnection();
 
-                javax.swing.SwingUtilities.invokeLater(() -> {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Report generated successfully");
-                });
+        String employee = jComboBox3.getSelectedItem().toString();
+        String department = jComboBox4.getSelectedItem().toString();
 
-            } catch (Exception e) {
-                javax.swing.SwingUtilities.invokeLater(() -> {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-                });
+        String sql;
+        java.sql.PreparedStatement ps;
+
+        if (employee != null && !employee.equals("All") && !employee.trim().isEmpty()) {
+
+            sql = "SELECT * FROM employees WHERE full_name = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, employee);
+
+        } else {
+            sql = "SELECT * FROM employees WHERE 1=1";
+
+            if (department != null && !department.equals("All") && !department.trim().isEmpty()) {
+                sql += " AND department = ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, department);
+            } else {
+                ps = con.prepareStatement(sql);
             }
-        });
+        }
 
-        reportThread.start();
-        var dash = new Dashboard();
-        dash.setVisible(true);
-        this.dispose();
+        java.sql.ResultSet rs = ps.executeQuery();
+
+        java.io.FileWriter writer = new java.io.FileWriter("Generated_Report.txt");
+
+        writer.write("---------- HR REPORT ----------\n");
+        writer.write("Generated on: " + java.time.LocalDate.now() + "\n\n");
+
+        int count = 0;
+
+        while (rs.next()) {
+            writer.write(
+                "ID: " + rs.getString("emp_id") + "\n" +
+                "Name: " + rs.getString("full_name") + "\n" +
+                "Department: " + rs.getString("department") + "\n" +
+                "Join Date: " + rs.getString("join_date") + "\n" +
+                "Email: " + rs.getString("email") + "\n" +
+                "Phone: " + rs.getString("phone") + "\n" +
+                "------------------------------\n"
+            );
+            count++;
+        }
+
+        writer.write("\nTotal Employees: " + count);
+
+        writer.close();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Report generated successfully!");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-        javax.swing.JOptionPane.showMessageDialog(
-        this,
-        "Report file has been created successfully!",
-        "Success",
-        javax.swing.JOptionPane.INFORMATION_MESSAGE
-);
+     try {
+        java.sql.Connection con = database.DBConnection.getConnection();
+
+        String employee = jComboBox3.getSelectedItem().toString();
+        String department = jComboBox4.getSelectedItem().toString();
+
+        String sql;
+        java.sql.PreparedStatement ps;
+
+        if (employee != null && !employee.equals("All") && !employee.trim().isEmpty()) {
+
+            sql = "SELECT * FROM employees WHERE full_name = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, employee);
+
+        } else {
+
+            sql = "SELECT * FROM employees WHERE 1=1";
+
+            if (department != null && !department.equals("All") && !department.trim().isEmpty()) {
+                sql += " AND department = ?";
+                ps = con.prepareStatement(sql);
+                ps.setString(1, department);
+            } else {
+                ps = con.prepareStatement(sql);
+            }
+        }
+
+        java.sql.ResultSet rs = ps.executeQuery();
+
+        java.io.FileWriter writer = new java.io.FileWriter("HR_Report.txt");
+
+        writer.write("=====================================\n");
+        writer.write("           HR REPORT                 \n");
+        writer.write("=====================================\n");
+        writer.write("Generated on: " + java.time.LocalDate.now() + "\n\n");
+
+        int count = 0;
+
+        while (rs.next()) {
+            writer.write(
+                "Employee ID : " + rs.getString("emp_id") + "\n" +
+                "Name        : " + rs.getString("full_name") + "\n" +
+                "Department  : " + rs.getString("department") + "\n" +
+                "Join Date   : " + rs.getString("join_date") + "\n" +
+                "Email       : " + rs.getString("email") + "\n" +
+                "Phone       : " + rs.getString("phone") + "\n" +
+                "-------------------------------------\n"
+            );
+            count++;
+        }
+
+        writer.write("\nTotal Employees: " + count);
+
+        writer.close();
+
+        javax.swing.JOptionPane.showMessageDialog(this, "Report generated successfully!");
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed

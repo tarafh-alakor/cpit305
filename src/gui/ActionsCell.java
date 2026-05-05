@@ -88,14 +88,14 @@ public class ActionsCell {
             try {
                 java.sql.Connection con = database.DBConnection.getConnection();
 
-                String sql = "UPDATE leave_requests SET status=? WHERE id=?";
+                String sql = "UPDATE leave_requests SET status=? WHERE leave_id=?";
                 java.sql.PreparedStatement ps = con.prepareStatement(sql);
 
                 ps.setString(1, status);
                 ps.setInt(2, id);
 
                 ps.executeUpdate();
-                // تحديث الجدول
+                
                 table.setValueAt(status, row, 5);
 
                 javax.swing.JOptionPane.showMessageDialog(null, "Status updated!");

@@ -388,12 +388,8 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="EMP001 - Sara Ahmed"/>
-                    <StringItem index="1" value="EMP002 - Ali Mohamed"/>
-                    <StringItem index="2" value="EMP003 - Dana Mubarak"/>
-                    <StringItem index="3" value="EMP004 - Rakan Faisal"/>
-                    <StringItem index="4" value="EMP005 - Latifa Khalid"/>
+                  <StringArray count="1">
+                    <StringItem index="0" value="All"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -411,14 +407,15 @@
                   <Font name="Segoe UI" size="14" style="0"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="7">
-                    <StringItem index="0" value="HR"/>
-                    <StringItem index="1" value="Finance"/>
-                    <StringItem index="2" value="Sales"/>
-                    <StringItem index="3" value="IT"/>
-                    <StringItem index="4" value="Engineering"/>
-                    <StringItem index="5" value="Operations"/>
-                    <StringItem index="6" value="Admin"/>
+                  <StringArray count="8">
+                    <StringItem index="0" value="All"/>
+                    <StringItem index="1" value="HR"/>
+                    <StringItem index="2" value="Finance"/>
+                    <StringItem index="3" value="Sales"/>
+                    <StringItem index="4" value="IT"/>
+                    <StringItem index="5" value="Engineering"/>
+                    <StringItem index="6" value="Operations"/>
+                    <StringItem index="7" value="Admin"/>
                   </StringArray>
                 </Property>
               </Properties>
