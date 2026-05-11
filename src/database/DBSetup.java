@@ -39,15 +39,31 @@ public class DBSetup {
 
             st.executeUpdate("""
                CREATE TABLE IF NOT EXISTS leave_requests (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    leave_id INT AUTO_INCREMENT PRIMARY KEY,
                     emp_name VARCHAR(100),
                     leave_type VARCHAR(50),
-                    start_date DATE,
-                    end_date DATE,
+                    leave_date DATE,
                     total_days INT,
                     status VARCHAR(20)
                 )
             """);
+            
+            var rs = st.executeQuery("SELECT COUNT(*) FROM leave_requests");
+            rs.next();
+            if (rs.getInt(1) == 0) {
+
+            st.executeUpdate("""
+                INSERT INTO leave_requests
+                (emp_name, leave_type, leave_date, total_days, status)
+                VALUES
+                ('Rakan Faisal', 'Sick', '2026-05-01', 3, 'Pending'),            
+                ('Latifa Khalid', 'Annual', '2026-05-05', 7, 'Pending'),            
+                ('Maha Saud', 'Unpaid', '2026-05-10', 1, 'Pending'),            
+                ('Sara Ahmed', 'Sick', '2026-05-15', 4, 'Pending'),            
+                ('Faisal Mohammed', 'Annual', '2026-05-20', 10, 'Pending')
+            """);
+            }
+            
             st.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS contracts (
                     contract_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -55,7 +71,7 @@ public class DBSetup {
                     contract_type VARCHAR(50),
                     start_date DATE,
                     end_date DATE,
-                    status VARCHAR(20)
+                    status VARCHAR(20),
                     FOREIGN KEY (emp_id) REFERENCES employees(emp_id)
                 )
             """);
