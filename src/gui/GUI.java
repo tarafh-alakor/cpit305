@@ -7,14 +7,12 @@ package gui;
 import database.DBSetup;
 
 /**
- *
- * @author mawad
+ * GUI - Application entry point. Initializes the database schema via DBSetup,
+ * then launches the Login screen on the Swing Event Dispatch Thread (EDT) for
+ * thread-safe GUI startup.
  */
 public class GUI {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         // TODO code application logic here
         //Database setup

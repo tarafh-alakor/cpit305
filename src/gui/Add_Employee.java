@@ -1,10 +1,16 @@
-
 package gui;
 
 import javax.swing.JOptionPane;
 
+/**
+ * Add_Employee - Form for adding new employees to the HR system. Validates all
+ * input fields (email format, phone format, date format, duplicate ID). On
+ * success: saves to database, sends network notification, logs the action to
+ * file. Demonstrates: Database (INSERT), Networking in line 626(HRClient),
+ * IOStream in line 628(LoggerUtil).
+ */
 public class Add_Employee extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Add_Employee.class.getName());
 
     /**
@@ -12,7 +18,167 @@ public class Add_Employee extends javax.swing.JFrame {
      */
     public Add_Employee() {
         initComponents();
-       // jDateChooser1.setDate(null); 
+        
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+setupPlaceholders();
+    }
+
+    /**
+     * Adds placeholder text to input fields that vanishes on click
+     */
+    private void setupPlaceholders() {
+        addPlaceholder(jTextField1, "e.g. EMP010");
+        addPlaceholder(jTextField2, "Full Name");
+        addPlaceholder(jTextField3, "name@company.com");
+        addPlaceholder(jTextField4, "05XXXXXXXX");
+        setupDateChooserField(jTextField5, "Select join date");
+    }
+
+    private void addPlaceholder(javax.swing.JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(java.awt.Color.GRAY);
+        field.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (field.getText().trim().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
+    }
+
+    /**
+     * Makes a text field behave like a small calendar DateChooser.
+     */
+    private void setupDateChooserField(javax.swing.JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(new java.awt.Color(120, 120, 120));
+        field.setEditable(false);
+        field.setBackground(java.awt.Color.WHITE);
+        field.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 165, 180)),
+                javax.swing.BorderFactory.createEmptyBorder(4, 8, 4, 8)));
+        field.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        field.setToolTipText("Click to choose a date");
+
+        field.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                showDateChooser(field, placeholder);
+            }
+        });
+    }
+
+    /**
+     * Opens a small calendar popup and writes the selected date as yyyy-MM-dd.
+     */
+    private void showDateChooser(javax.swing.JTextField target, String placeholder) {
+        javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
+        popup.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(160, 160, 160)));
+
+        java.time.LocalDate currentDate = java.time.LocalDate.now();
+        String currentText = target.getText() == null ? "" : target.getText().trim();
+        try {
+            if (!currentText.isEmpty() && !currentText.equals(placeholder) && !currentText.startsWith("Select")) {
+                currentDate = java.time.LocalDate.parse(currentText);
+            }
+        } catch (Exception ignored) {
+            currentDate = java.time.LocalDate.now();
+        }
+
+        final java.time.YearMonth[] month = {java.time.YearMonth.from(currentDate)};
+        javax.swing.JPanel main = new javax.swing.JPanel(new java.awt.BorderLayout(6, 6));
+        main.setBackground(java.awt.Color.WHITE);
+        main.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+        javax.swing.JPanel header = new javax.swing.JPanel(new java.awt.BorderLayout(5, 5));
+        header.setBackground(java.awt.Color.WHITE);
+        javax.swing.JButton previous = new javax.swing.JButton("<");
+        javax.swing.JButton next = new javax.swing.JButton(">");
+        javax.swing.JLabel title = new javax.swing.JLabel("", javax.swing.SwingConstants.CENTER);
+        title.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+        header.add(previous, java.awt.BorderLayout.WEST);
+        header.add(title, java.awt.BorderLayout.CENTER);
+        header.add(next, java.awt.BorderLayout.EAST);
+
+        javax.swing.JPanel calendarGrid = new javax.swing.JPanel(new java.awt.GridLayout(0, 7, 3, 3));
+        calendarGrid.setBackground(java.awt.Color.WHITE);
+
+        final Runnable[] refresh = new Runnable[1];
+        refresh[0] = () -> {
+            calendarGrid.removeAll();
+            title.setText(month[0].getMonth().toString() + " " + month[0].getYear());
+
+            String[] days = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+            for (String d : days) {
+                javax.swing.JLabel dayLabel = new javax.swing.JLabel(d, javax.swing.SwingConstants.CENTER);
+                dayLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 11));
+                calendarGrid.add(dayLabel);
+            }
+
+            java.time.LocalDate first = month[0].atDay(1);
+            int blanks = first.getDayOfWeek().getValue() % 7;
+            for (int i = 0; i < blanks; i++) {
+                calendarGrid.add(new javax.swing.JLabel(""));
+            }
+
+            int daysInMonth = month[0].lengthOfMonth();
+            for (int day = 1; day <= daysInMonth; day++) {
+                final java.time.LocalDate selectedDate = month[0].atDay(day);
+                javax.swing.JButton dayButton = new javax.swing.JButton(String.valueOf(day));
+                dayButton.setFocusPainted(false);
+                dayButton.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 11));
+                dayButton.setBackground(java.awt.Color.WHITE);
+                dayButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                dayButton.addActionListener(e -> {
+                    target.setText(selectedDate.toString());
+                    target.setForeground(java.awt.Color.BLACK);
+                    popup.setVisible(false);
+                });
+                calendarGrid.add(dayButton);
+            }
+
+            calendarGrid.revalidate();
+            calendarGrid.repaint();
+            popup.pack();
+        };
+
+        previous.addActionListener(e -> {
+            month[0] = month[0].minusMonths(1);
+            refresh[0].run();
+        });
+        next.addActionListener(e -> {
+            month[0] = month[0].plusMonths(1);
+            refresh[0].run();
+        });
+
+        main.add(header, java.awt.BorderLayout.NORTH);
+        main.add(calendarGrid, java.awt.BorderLayout.CENTER);
+        popup.add(main);
+        refresh[0].run();
+        popup.show(target, 0, target.getHeight());
+    }
+
+    /**
+     * Returns empty when the date field still contains its placeholder.
+     */
+    private String cleanDateField(javax.swing.JTextField field) {
+        String value = field.getText() == null ? "" : field.getText().trim();
+        if (value.isEmpty() || value.startsWith("Select") || value.startsWith("YYYY")) {
+            return "";
+        }
+        return value;
     }
 
     /**
@@ -24,7 +190,7 @@ public class Add_Employee extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = new BackgroundPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
@@ -414,35 +580,35 @@ public class Add_Employee extends javax.swing.JFrame {
             String empId = jTextField1.getText();
             String fullName = jTextField2.getText();
             String department = jComboBox1.getSelectedItem().toString();
-           // java.util.Date date = jDateChooser1.getDate();
-           String date = jTextField5.getText();
+            String date = cleanDateField(jTextField5);
             String email = jTextField3.getText();
             String phone = jTextField4.getText();
-            //Empty validation
-//            if (empId.isEmpty() || fullName.isEmpty() || date == null || email.isEmpty() || phone.isEmpty()) {
-//                javax.swing.JOptionPane.showMessageDialog(this, "Please fill all fields");
-//                return;
-//            }
-            if (empId.isEmpty() || fullName.isEmpty() || date.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+
+            // Treat placeholder text as empty
+            if (empId.isEmpty() || empId.startsWith("e.g")
+                    || fullName.isEmpty() || fullName.equals("Full Name")
+                    || email.isEmpty() || email.equals("name@company.com")
+                    || phone.isEmpty() || phone.equals("05XXXXXXXX")
+                    || date.isEmpty()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Please fill all fields");
                 return;
             }
-            
+
             //Email validation
             String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
-            if(!email.matches(emailRegex)){
+            if (!email.matches(emailRegex)) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Invalid email format");
                 return;
             }
             //Phone validation
             String phoneRegex = "^05\\d{8}$";
-            if(!phone.matches(phoneRegex)){
+            if (!phone.matches(phoneRegex)) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Phone must be in format: 05XXXXXXXX");
                 return;
             }
-            
+
             if (date.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Enter date (YYYY-MM-DD)");
+                JOptionPane.showMessageDialog(this, "Please select the join date");
                 return;
             }
 
@@ -454,9 +620,6 @@ public class Add_Employee extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Date must be YYYY-MM-DD");
                 return;
             }
-
-            //java.sql.Date joinDate = new java.sql.Date(date.getTime());
-           
 
             java.sql.Connection con = database.DBConnection.getConnection();
             //Prevent dublicate employee ID
@@ -480,11 +643,11 @@ public class Add_Employee extends javax.swing.JFrame {
             ps.setString(6, phone);
 
             ps.executeUpdate();
-            //Networking
-            network.HRClient.sendNotification("New employee added: "+ fullName);
-            //Logging
-            utils.LoggerUtil.log("employees.txt", "Added employee: "+fullName+" ("+empId+")");
-            
+            //Networking:
+            network.HRClient.sendNotification("New employee added: " + fullName);
+            //Logging:
+            utils.LoggerUtil.log("employees.txt", "Added employee: " + fullName + " (" + empId + ")");
+
             javax.swing.JOptionPane.showMessageDialog(this, "Employee added successfully");
 
         } catch (Exception e) {
@@ -493,7 +656,7 @@ public class Add_Employee extends javax.swing.JFrame {
         var dashboard = new Dashboard();
         dashboard.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -512,7 +675,7 @@ public class Add_Employee extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        var REPOR = new REPOR();
+        var REPOR = new Report();
         REPOR.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed

@@ -4,17 +4,19 @@
  */
 package gui;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import network.HRClient;
 import utils.LoggerUtil;
 
 /**
- *
- * @author mawad
+ * Login - Entry point screen for the HR Management System. Authenticates users
+ * against the database. Validates non-empty credentials. On successful login:
+ * sends a network notification and logs the event to login.txt. Demonstrates:
+ * Database (SELECT), Networking in line 272(HRClient), IOStream in line
+ * 274(LoggerUtil). Supports navigation to SignUp and ForgotPassword screens.
  */
 public class Login extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Login.class.getName());
 
     /**
@@ -22,6 +24,34 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+addPlaceholder(jTextField1, "Username");
+        addPlaceholder(jTextField2, "Password");
+    }
+
+    private void addPlaceholder(javax.swing.JTextField field, String ph) {
+        field.setText(ph);
+        field.setForeground(java.awt.Color.GRAY);
+        field.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (field.getText().equals(ph)) {
+                    field.setText("");
+                    field.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (field.getText().trim().isEmpty()) {
+                    field.setText(ph);
+                    field.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
     }
 
     /**
@@ -35,7 +65,7 @@ public class Login extends javax.swing.JFrame {
 
         jPanel5 = new javax.swing.JPanel();
         jMenu1 = new javax.swing.JMenu();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new BackgroundPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -233,7 +263,7 @@ public class Login extends javax.swing.JFrame {
             String username = jTextField1.getText();
             String password = jTextField2.getText();
 
-            if (username.isEmpty() || password.isEmpty()) {
+            if (username.isEmpty() || username.equals("Username") || password.isEmpty() || password.equals("Password")) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Enter username and password");
                 return;
             }
@@ -250,9 +280,11 @@ public class Login extends javax.swing.JFrame {
 
             if (rs.next()) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Login successful");
-                
-                HRClient.sendNotification("User logged in: "+ username);
-                LoggerUtil.log("login.txt", "User logged in: "+ username);
+                //Networking:
+                HRClient.sendNotification("User logged in: " + username);
+                //Logging(IO):
+                LoggerUtil.log("login.txt", "User logged in: " + username);
+
                 new Dashboard().setVisible(true);
                 this.dispose();
             } else {
@@ -262,26 +294,23 @@ public class Login extends javax.swing.JFrame {
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-        
-      //  var dash = new Dashboard();
-//        dash.setVisible(true);
-//        this.dispose();
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
-        var sign = new SignUP(); 
+        var sign = new SignUP();
         sign.setVisible(true);
-       
+
         this.dispose();
-       
+
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-         var Forgotpass = new ForgotPass(); 
+        var Forgotpass = new ForgotPass();
         Forgotpass.setVisible(true);
-       
+
         this.dispose();
     }//GEN-LAST:event_jLabel4MouseClicked
 

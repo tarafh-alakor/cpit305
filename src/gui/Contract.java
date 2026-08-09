@@ -4,12 +4,14 @@
  */
 package gui;
 
-import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author mawad
+ * Contract - Manages employee contracts in the HR system. Allows adding new
+ * contracts and viewing all contracts with auto-calculated status. Contract
+ * status is computed in real-time: Active, Expiring Soon (< 90 days), or
+ * Expired. Demonstrates: Database (CRUD), Networking in line 641(HRClient
+ * notification), IOStream in line 644(LoggerUtil).
  */
 public class Contract extends javax.swing.JFrame {
 
@@ -21,13 +23,203 @@ public class Contract extends javax.swing.JFrame {
      */
     public Contract(String empId) {
         initComponents();
-        this.empId = empId;
+        
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+this.empId = empId;
     }
 
     public Contract() {
         initComponents();
         loadEmployees();
+        setupPlaceholders();
+        setupContractTable();
         loadContractsTable();
+    }
+
+    /**
+     * Applies the same calendar DateChooser style used in the Reports screen.
+     */
+    private void setupPlaceholders() {
+        setupDateChooserField(jTextField1, "Select start date");
+        setupDateChooserField(jTextField2, "Select end date");
+    }
+
+    /**
+     * Makes a text field behave like a small calendar DateChooser.
+     */
+    private void setupDateChooserField(javax.swing.JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(new java.awt.Color(120, 120, 120));
+        field.setEditable(false);
+        field.setBackground(java.awt.Color.WHITE);
+        field.setBorder(javax.swing.BorderFactory.createCompoundBorder(
+                javax.swing.BorderFactory.createLineBorder(new java.awt.Color(150, 165, 180)),
+                javax.swing.BorderFactory.createEmptyBorder(4, 8, 4, 8)));
+        field.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        field.setToolTipText("Click to choose a date");
+
+        field.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                showDateChooser(field, placeholder);
+            }
+        });
+    }
+
+    /**
+     * Opens a small calendar popup and writes the selected date as yyyy-MM-dd.
+     */
+    private void showDateChooser(javax.swing.JTextField target, String placeholder) {
+        javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
+        popup.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(160, 160, 160)));
+
+        java.time.LocalDate currentDate = java.time.LocalDate.now();
+        String currentText = target.getText() == null ? "" : target.getText().trim();
+        try {
+            if (!currentText.isEmpty() && !currentText.equals(placeholder) && !currentText.startsWith("Select")) {
+                currentDate = java.time.LocalDate.parse(currentText);
+            }
+        } catch (Exception ignored) {
+            currentDate = java.time.LocalDate.now();
+        }
+
+        final java.time.YearMonth[] month = {java.time.YearMonth.from(currentDate)};
+        javax.swing.JPanel main = new javax.swing.JPanel(new java.awt.BorderLayout(6, 6));
+        main.setBackground(java.awt.Color.WHITE);
+        main.setBorder(javax.swing.BorderFactory.createEmptyBorder(8, 8, 8, 8));
+
+        javax.swing.JPanel header = new javax.swing.JPanel(new java.awt.BorderLayout(5, 5));
+        header.setBackground(java.awt.Color.WHITE);
+        javax.swing.JButton previous = new javax.swing.JButton("<");
+        javax.swing.JButton next = new javax.swing.JButton(">");
+        javax.swing.JLabel title = new javax.swing.JLabel("", javax.swing.SwingConstants.CENTER);
+        title.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 13));
+        header.add(previous, java.awt.BorderLayout.WEST);
+        header.add(title, java.awt.BorderLayout.CENTER);
+        header.add(next, java.awt.BorderLayout.EAST);
+
+        javax.swing.JPanel calendarGrid = new javax.swing.JPanel(new java.awt.GridLayout(0, 7, 3, 3));
+        calendarGrid.setBackground(java.awt.Color.WHITE);
+
+        final Runnable[] refresh = new Runnable[1];
+        refresh[0] = () -> {
+            calendarGrid.removeAll();
+            title.setText(month[0].getMonth().toString() + " " + month[0].getYear());
+
+            String[] days = {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+            for (String d : days) {
+                javax.swing.JLabel dayLabel = new javax.swing.JLabel(d, javax.swing.SwingConstants.CENTER);
+                dayLabel.setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 11));
+                calendarGrid.add(dayLabel);
+            }
+
+            java.time.LocalDate first = month[0].atDay(1);
+            int blanks = first.getDayOfWeek().getValue() % 7;
+            for (int i = 0; i < blanks; i++) {
+                calendarGrid.add(new javax.swing.JLabel(""));
+            }
+
+            int daysInMonth = month[0].lengthOfMonth();
+            for (int day = 1; day <= daysInMonth; day++) {
+                final java.time.LocalDate selectedDate = month[0].atDay(day);
+                javax.swing.JButton dayButton = new javax.swing.JButton(String.valueOf(day));
+                dayButton.setFocusPainted(false);
+                dayButton.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 11));
+                dayButton.setBackground(java.awt.Color.WHITE);
+                dayButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                dayButton.addActionListener(e -> {
+                    target.setText(selectedDate.toString());
+                    target.setForeground(java.awt.Color.BLACK);
+                    popup.setVisible(false);
+                });
+                calendarGrid.add(dayButton);
+            }
+
+            calendarGrid.revalidate();
+            calendarGrid.repaint();
+            popup.pack();
+        };
+
+        previous.addActionListener(e -> {
+            month[0] = month[0].minusMonths(1);
+            refresh[0].run();
+        });
+        next.addActionListener(e -> {
+            month[0] = month[0].plusMonths(1);
+            refresh[0].run();
+        });
+
+        main.add(header, java.awt.BorderLayout.NORTH);
+        main.add(calendarGrid, java.awt.BorderLayout.CENTER);
+        popup.add(main);
+        refresh[0].run();
+        popup.show(target, 0, target.getHeight());
+    }
+
+    /**
+     * Returns empty when the date field still contains its placeholder.
+     */
+    private String cleanDateField(javax.swing.JTextField field) {
+        String value = field.getText() == null ? "" : field.getText().trim();
+        if (value.isEmpty() || value.startsWith("Select") || value.startsWith("YYYY")) {
+            return "";
+        }
+        return value;
+    }
+
+    /**
+     * Sets up column widths and the coloured Status cell renderer
+     */
+    private void setupContractTable() {
+        jTable1.setRowHeight(32);
+        jTable1.getTableHeader().setFont(
+                new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+        jTable1.getTableHeader().setBackground(new java.awt.Color(0, 204, 153));
+        jTable1.getTableHeader().setForeground(java.awt.Color.WHITE);
+
+        // Column widths
+        int[] widths = {90, 140, 110, 110, 110, 110};
+        for (int i = 0; i < widths.length; i++) {
+            jTable1.getColumnModel().getColumn(i).setPreferredWidth(widths[i]);
+        }
+
+        // Colour-coded Status column (index 5)
+        jTable1.getColumnModel().getColumn(5).setCellRenderer(
+                new javax.swing.table.DefaultTableCellRenderer() {
+            @Override
+            public java.awt.Component getTableCellRendererComponent(
+                    javax.swing.JTable t, Object val,
+                    boolean sel, boolean foc, int row, int col) {
+                super.getTableCellRendererComponent(t, val, sel, foc, row, col);
+                setHorizontalAlignment(CENTER);
+                setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 11));
+                String s = val == null ? "" : val.toString();
+                switch (s) {
+                    case "Active":
+                        setBackground(new java.awt.Color(200, 255, 210));
+                        setForeground(new java.awt.Color(0, 130, 50));
+                        break;
+                    case "Expiring Soon":
+                        setBackground(new java.awt.Color(255, 243, 180));
+                        setForeground(new java.awt.Color(180, 110, 0));
+                        break;
+                    case "Expired":
+                        setBackground(new java.awt.Color(255, 210, 210));
+                        setForeground(new java.awt.Color(180, 0, 0));
+                        break;
+                    default:
+                        setBackground(java.awt.Color.WHITE);
+                        setForeground(java.awt.Color.BLACK);
+                }
+                if (sel) {
+                    setBackground(getBackground().darker());
+                }
+                return this;
+            }
+        }
+        );
     }
 
     /**
@@ -39,7 +231,7 @@ public class Contract extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = new BackgroundPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -208,20 +400,18 @@ public class Contract extends javax.swing.JFrame {
         jTable1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
+            new Object [][] {},
             new String [] {
-                "Employee ID", "Name", "End Date", "Statue"
+                "Employee ID", "Name", "Contract Type", "Start Date", "End Date", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class,
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class
             };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+            boolean[] editable = new boolean[]{false,false,false,false,false,false};
+            public Class getColumnClass(int i) { return types[i]; }
+            public boolean isCellEditable(int r, int c) { return editable[c]; }
         });
         jTable1.setToolTipText("");
         jTable1.setAlignmentX(2.0F);
@@ -234,6 +424,38 @@ public class Contract extends javax.swing.JFrame {
         jTable1.setShowGrid(true);
         jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);
+
+        // Fix status column width
+        try {
+            jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(90);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(140);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(170);
+        } catch (Exception e) {
+        }
+
+        try { jTable1.getColumnModel().getColumn(jTable1.getColumnCount()-1).setPreferredWidth(150); } catch (Exception e) { }
+
+
+        // Keep full text visible with horizontal scrolling
+        try {
+            jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            jScrollPane1.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(170);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(170);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(130);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(130);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(220);
+
+            jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        } catch (Exception e) {
+        }
+
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -352,119 +574,152 @@ public class Contract extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-  private void loadEmployees() {
-    try {
-        java.sql.Connection con = database.DBConnection.getConnection();
-        String sql = "SELECT emp_id FROM employees";
-        java.sql.PreparedStatement ps = con.prepareStatement(sql);
-        java.sql.ResultSet rs = ps.executeQuery();
+  /**
+     * Loads all employee IDs from the database into the employee selector
+     * ComboBox.
+     */
+    private void loadEmployees() {
+        try {
+            java.sql.Connection con = database.DBConnection.getConnection();
+            String sql = "SELECT emp_id FROM employees";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            java.sql.ResultSet rs = ps.executeQuery();
 
-        while (rs.next()) {
-            jComboBox1.addItem(rs.getString("emp_id"));
+            while (rs.next()) {
+                jComboBox1.addItem(rs.getString("emp_id"));
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
         }
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e.getMessage());
     }
-}
 
+    /**
+     * Calculates the contract status from the end date. Expired: end date
+     * passed. Expiring Soon: 90 days or less remaining. Active: more than 90
+     * days remaining.
+     */
     private String getStatus(java.sql.Date endDate) {
         java.time.LocalDate today = java.time.LocalDate.now();
         java.time.LocalDate end = endDate.toLocalDate();
 
         if (end.isBefore(today)) {
             return "Expired";
-        } else if (end.isBefore(today.plusDays(90))) {
+        }
+
+        long daysLeft = java.time.temporal.ChronoUnit.DAYS.between(today, end);
+
+        if (daysLeft <= 90) {
             return "Expiring Soon";
-        } else {
-            return "Active";
         }
+
+        return "Active";
     }
-    
+
+    /**
+     * Loads all contracts (joined with employee names) into the contracts
+     * table. Computes and displays the status for each contract dynamically.
+     */
     private void loadContractsTable() {
-      try {
-        java.sql.Connection con = database.DBConnection.getConnection();
-
-        String sql = "SELECT c.emp_id, e.full_name, c.end_date " +
-                     "FROM contracts c " +
-                     "JOIN employees e ON c.emp_id = e.emp_id";
-
-        java.sql.PreparedStatement ps = con.prepareStatement(sql);
-
-        // ❌ احذفي هذا إذا موجود:
-        // ps.setString(1, empId);
-
-        java.sql.ResultSet rs = ps.executeQuery();
-
-        javax.swing.table.DefaultTableModel model =
-            (javax.swing.table.DefaultTableModel) jTable1.getModel();
-
-        model.setRowCount(0);
-
-        while (rs.next()) {
-            String id = rs.getString("emp_id");
-            String name = rs.getString("full_name");
-            java.sql.Date endDate = rs.getDate("end_date");
-
-            String status = getStatus(endDate);
-
-            model.addRow(new Object[]{id, name, endDate, status});
-        }
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "Error: " + e.getMessage());
-    }
-}
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         try {
-            String empID = jComboBox1.getSelectedItem().toString().trim();
-            String contractType = jComboBox2.getSelectedItem().toString();
-            String startText = jTextField1.getText().trim();
-            String endText = jTextField2.getText().trim();
-
-            java.sql.Date startDate = java.sql.Date.valueOf(startText);
-            java.sql.Date endDate = java.sql.Date.valueOf(endText);
-            if(endDate.before(startDate)){
-                JOptionPane.showMessageDialog(this, "End date must be after start date");
-                return;
-            }
             java.sql.Connection con = database.DBConnection.getConnection();
-            String sql = "INSERT INTO contracts (emp_id, contract_type, start_date, end_date, status) VALUES (?, ?, ?, ?, ?)";
+
+            String sql = "SELECT c.id, c.emp_name AS emp_id, e.full_name, c.contract_type, c.start_date, c.end_date, c.status "
+                    + "FROM contracts c "
+                    + "LEFT JOIN employees e ON c.emp_name = e.emp_id "
+                    + "ORDER BY c.id DESC";
 
             java.sql.PreparedStatement ps = con.prepareStatement(sql);
 
-            ps.setString(1, empID);
-            ps.setString(2, contractType);
-            ps.setDate(3, startDate);
-            ps.setDate(4, endDate);
-            ps.setString(5, "Active");
+            java.sql.ResultSet rs = ps.executeQuery();
 
-            ps.executeUpdate();
-            loadContractsTable();
-            
-            JOptionPane.showMessageDialog(this, "Contract saved successfully");
-            
-            //Networking
-            network.HRClient.sendNotification("Contract updated for employee: " + empID);
-            //Logging
-            utils.LoggerUtil.log("contract.txt", "Contract updated for: " + empID);
-            // Clear fields
-            jTextField1.setText("");
-            jTextField2.setText("");
-            jComboBox1.setSelectedIndex(0);
+            javax.swing.table.DefaultTableModel model
+                    = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                String id = rs.getString("emp_id");
+                String name = rs.getString("full_name");
+                String type = rs.getString("contract_type");
+                java.sql.Date startDate = rs.getDate("start_date");
+                java.sql.Date endDate = rs.getDate("end_date");
+                String status = getStatus(endDate);
+
+                model.addRow(new Object[]{id, name, type, startDate, endDate, status});
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage());
+        }
+    }
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            String empID = jComboBox1.getSelectedItem().toString().trim();
+            String contractType = jComboBox2.getSelectedItem().toString();
+            String startText = cleanDateField(jTextField1);
+            String endText = cleanDateField(jTextField2);
+
+            if (startText.isEmpty() || endText.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Please enter both Start Date and End Date\nFormat: YYYY-MM-DD");
+                return;
+            }
+
+            java.sql.Date startDate = java.sql.Date.valueOf(startText);
+            java.sql.Date endDate = java.sql.Date.valueOf(endText);
+            if (endDate.before(startDate)) {
+                JOptionPane.showMessageDialog(this, "End date must be after start date");
+                return;
+            }
+
+            jButton1.setEnabled(false);
+
+            // Multi-threading: save contract in a background thread so the GUI does not freeze.
+            new Thread(() -> {
+                try {
+                    java.sql.Connection con = database.DBConnection.getConnection();
+                    String sql = "INSERT INTO contracts (emp_name, contract_type, start_date, end_date, status) VALUES (?, ?, ?, ?, ?)";
+                    java.sql.PreparedStatement ps = con.prepareStatement(sql);
+
+                    ps.setString(1, empID);
+                    ps.setString(2, contractType);
+                    ps.setDate(3, startDate);
+                    ps.setDate(4, endDate);
+                    ps.setString(5, getStatus(endDate));
+                    ps.executeUpdate();
+
+                    // Networking: notify HR server about the contract update.
+                    network.HRClient.sendNotification("Contract updated for employee: " + empID);
+
+                    // IOStream: write the action to a log file.
+                    utils.LoggerUtil.log("contract.txt", "Contract updated for: " + empID);
+
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        loadContractsTable();
+                        JOptionPane.showMessageDialog(this, "Contract saved successfully");
+                        jTextField1.setText("Select start date");
+                        jTextField1.setForeground(new java.awt.Color(120, 120, 120));
+                        jTextField2.setText("Select end date");
+                        jTextField2.setForeground(new java.awt.Color(120, 120, 120));
+                        jComboBox1.setSelectedIndex(0);
+                        jButton1.setEnabled(true);
+                    });
+
+                } catch (Exception e) {
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        JOptionPane.showMessageDialog(this, "Unexpected error: " + e.getMessage());
+                        jButton1.setEnabled(true);
+                    });
+                }
+            }).start();
 
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this,
                     "Invalid date. Use format YYYY-MM-DD (example: 2025-05-01)");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,
-                    "Unexpected error: " + e.getMessage());
+            jButton1.setEnabled(true);
         }
-//        var dash = new Dashboard();
-//        dash.setVisible(true);
-//        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -493,9 +748,9 @@ public class Contract extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-      
-       // TODO add your handling code here:
-       var Report = new LeaveRequests();
+
+        // TODO add your handling code here:
+        var Report = new LeaveRequests();
         Report.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -510,7 +765,7 @@ public class Contract extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        var REPOR = new REPOR();
+        var REPOR = new Report();
         REPOR.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -528,7 +783,9 @@ public class Contract extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-        String empId = jComboBox2.getSelectedItem().toString();
+        if (jComboBox1.getSelectedItem() != null) {
+            String empId = jComboBox1.getSelectedItem().toString();
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     /**
