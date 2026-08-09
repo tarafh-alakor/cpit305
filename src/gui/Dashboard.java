@@ -7,11 +7,13 @@ package gui;
 import java.awt.Color;
 
 /**
- *
- * @author mawad
+ * Dashboard - Main navigation hub of the HR Management System. Provides
+ * quick-access buttons and panels to all modules: Employees, Leave Requests,
+ * Contracts, and Reports. Includes logout functionality that returns to the
+ * Login screen.
  */
 public class Dashboard extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
 
     /**
@@ -19,20 +21,24 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         initComponents();
-        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
-    public void focusGained(java.awt.event.FocusEvent evt) {
-        if(jTextField1.getText().equals("Enter Username")) {
-            jTextField1.setText("");
-        }
-        jTextField1.setForeground(Color.BLACK);
-    }
+        
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (jTextField1.getText().equals("Enter Username")) {
+                    jTextField1.setText("");
+                }
+                jTextField1.setForeground(Color.BLACK);
+            }
 
-    public void focusLost(java.awt.event.FocusEvent evt) {
-        if(jTextField1.getText().equals("")) {
-            jTextField1.setText("Enter Username");
-        }
-    }
-});
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (jTextField1.getText().equals("")) {
+                    jTextField1.setText("Enter Username");
+                }
+            }
+        });
     }
 
     /**
@@ -44,14 +50,14 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new BackgroundPanel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jPanel2 = new BackgroundPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -404,10 +410,10 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-         var contract = new Contract();
+        var contract = new Contract();
         contract.setVisible(true);
         this.dispose();
-       
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -419,13 +425,13 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-          var Report = new LeaveRequests();
+        var Report = new LeaveRequests();
         Report.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-         // TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
@@ -472,15 +478,15 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-        var REPOR = new REPOR();
+        var REPOR = new Report();
         REPOR.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        var REPOR = new REPOR();
+        var REPOR = new Report();
         REPOR.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed
@@ -530,7 +536,7 @@ public class Dashboard extends javax.swing.JFrame {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Dashboard().setVisible(true));

@@ -5,8 +5,9 @@
 package gui;
 
 /**
- *
- * @author mawad
+ * SignUP - New user registration screen. Validates email format with regex,
+ * enforces password complexity (min 6 chars, letters+digits), and checks for
+ * duplicate usernames before inserting into the database.
  */
 public class SignUP extends javax.swing.JFrame {
 
@@ -17,6 +18,35 @@ public class SignUP extends javax.swing.JFrame {
      */
     public SignUP() {
         initComponents();
+        
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+addPlaceholder(jTextField1, "Choose a username");
+        addPlaceholder(jTextField3, "email@example.com");
+        addPlaceholder(jTextField2, "Min 6 chars, letters + numbers");
+    }
+
+    private void addPlaceholder(javax.swing.JTextField field, String ph) {
+        field.setText(ph);
+        field.setForeground(java.awt.Color.GRAY);
+        field.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (field.getText().equals(ph)) {
+                    field.setText("");
+                    field.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (field.getText().trim().isEmpty()) {
+                    field.setText(ph);
+                    field.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
     }
 
     /**
@@ -28,7 +58,7 @@ public class SignUP extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new BackgroundPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -189,7 +219,9 @@ public class SignUP extends javax.swing.JFrame {
             String email = jTextField3.getText();
             String password = jTextField2.getText();
 
-            if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            if (username.isEmpty() || username.equals("Choose a username")
+                    || email.isEmpty() || email.equals("email@example.com")
+                    || password.isEmpty() || password.equals("Min 6 chars, letters + numbers")) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Please fill all fields");
                 return;
             }

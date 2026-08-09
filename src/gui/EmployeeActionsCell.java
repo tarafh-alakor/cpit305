@@ -3,32 +3,34 @@ package gui;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.table.*;
-//import javax.swing.table.TableCellEditor;
-//import javax.swing.table.TableCellRenderer;
 
+/**
+ * EmployeeActionsCell - Custom table cell renderer and editor for the Employees table.
+ * Usage: EmployeeActionsCell.apply(jTable1, columnIndex);
+ */
 public class EmployeeActionsCell {
 
+    /**
+     * Attaches the custom renderer and editor to the given table column.
+     * @param table       the JTable to configure
+     * @param columnIndex the column index where action buttons appear
+     */
     public static void apply(JTable table, int columnIndex) {
-        table.getColumnModel().getColumn(columnIndex)
-                .setCellRenderer(new Renderer());
-        table.getColumnModel().getColumn(columnIndex)
-                .setCellEditor(new Editor(table));
-
+        table.getColumnModel().getColumn(columnIndex).setCellRenderer(new Renderer());
+        table.getColumnModel().getColumn(columnIndex).setCellEditor(new Editor(table));
         table.setRowHeight(36);
     }
 
-    // ===== عرض الأزرار =====
+    // ===== Renderer: shows static non-interactive buttons =====
     static class Renderer extends JPanel implements TableCellRenderer {
 
-        JButton view = new JButton("View Leave");
+        JButton view   = new JButton("View Leave");
         JButton manage = new JButton("Manage Contract");
 
         Renderer() {
             setLayout(new FlowLayout(FlowLayout.CENTER, 8, 4));
-
             view.setEnabled(false);
             manage.setEnabled(false);
-
             add(view);
             add(manage);
         }
@@ -42,44 +44,40 @@ public class EmployeeActionsCell {
         }
     }
 
-    // ===== تفاعل الأزرار =====
+    // ===== Editor: handles button clicks =====
     static class Editor extends AbstractCellEditor implements TableCellEditor {
 
-        JPanel panel = new JPanel();
-        JButton view = new JButton("View Leave");
+        JPanel panel   = new JPanel();
+        JButton view   = new JButton("View Leave");
         JButton manage = new JButton("Manage Contract");
         JTable table;
 
         Editor(JTable table) {
             this.table = table;
-
             panel.setLayout(new FlowLayout(FlowLayout.CENTER, 8, 4));
 
-            view.addActionListener(e -> openLeave());
-            manage.addActionListener(e -> openContract());
+            view.addActionListener(e -> openLeaveView());
+            manage.addActionListener(e -> openContractView());
 
             panel.add(view);
             panel.add(manage);
         }
 
-        private void openLeave() {
+        /** Opens the LeaveRequests screen for the selected employee. */
+        private void openLeaveView() {
             int row = table.getSelectedRow();
             String empID = table.getValueAt(row, 0).toString();
-
-            JOptionPane.showMessageDialog(null,
-                    "Opening Leave for Employee: " + empID);
-
             fireEditingStopped();
+            new LeaveRequests().setVisible(true);
         }
 
-        private void openContract() {
+        /** Opens the Contract management screen for the selected employee. */
+        private void openContractView() {
             int row = table.getSelectedRow();
             String empID = table.getValueAt(row, 0).toString();
-
-            JOptionPane.showMessageDialog(null,
-                    "Opening Contract for Employee: " + empID);
-
             fireEditingStopped();
+            // Pass empId to Contract so it can pre-select this employee
+            new Contract(empID).setVisible(true);
         }
 
         @Override

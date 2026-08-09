@@ -7,11 +7,12 @@ package gui;
 import java.awt.Color;
 
 /**
- *
- * @author Huawei
+ * Employee_Search_View - Displays a searchable list of all employees. Supports
+ * real-time search by Employee ID or Name using database queries. Provides
+ * navigation to Add Employee screen and per-row action buttons.
  */
 public class Employee_Search_View extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Employee_Search_View.class.getName());
 
     /**
@@ -19,45 +20,51 @@ public class Employee_Search_View extends javax.swing.JFrame {
      */
     public Employee_Search_View() {
         initComponents();
-     //  EmployeeActionsCell.apply(jTable1, 4);
-      // jTable1.getColumnModel().getColumn(4).setPreferredWidth(220);
-        loadEmployees("");
         
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+loadEmployees("");
+
     }
-    
+
+    /**
+     * Queries the database for employees matching the given keyword. Searches
+     * both emp_id and full_name columns. Clears and repopulates the table.
+     *
+     * @param keyword search string (empty string returns all employees)
+     */
     private void loadEmployees(String keyword) {
-    try {
-        java.sql.Connection con = database.DBConnection.getConnection();
+        try {
+            java.sql.Connection con = database.DBConnection.getConnection();
 
-        String sql = "SELECT * FROM employees WHERE emp_id LIKE ? OR full_name LIKE ?";
-        java.sql.PreparedStatement ps = con.prepareStatement(sql);
+            String sql = "SELECT * FROM employees WHERE emp_id LIKE ? OR full_name LIKE ?";
+            java.sql.PreparedStatement ps = con.prepareStatement(sql);
 
-        ps.setString(1, keyword + "%");
-        ps.setString(2,  keyword + "%");
+            ps.setString(1, keyword + "%");
+            ps.setString(2, keyword + "%");
 
-        java.sql.ResultSet rs = ps.executeQuery();
+            java.sql.ResultSet rs = ps.executeQuery();
 
-        javax.swing.table.DefaultTableModel model =
-                (javax.swing.table.DefaultTableModel) jTable1.getModel();
+            javax.swing.table.DefaultTableModel model
+                    = (javax.swing.table.DefaultTableModel) jTable1.getModel();
 
-        model.setRowCount(0);
+            model.setRowCount(0);
 
-        while (rs.next()) {
-            model.addRow(new Object[]{
-                rs.getString("emp_id"),
-                rs.getString("full_name"),
-                rs.getString("department"),
-                rs.getDate("join_date"),
-                rs.getString("email"),
-                rs.getString("phone"),
-             
-            });
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getString("emp_id"),
+                    rs.getString("full_name"),
+                    rs.getString("department"),
+                    rs.getDate("join_date"),
+                    rs.getString("email"),
+                    rs.getString("phone"),});
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error loading employees: " + e.getMessage());
         }
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Error loading employees: " + e.getMessage());
     }
-}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -69,7 +76,7 @@ public class Employee_Search_View extends javax.swing.JFrame {
     private void initComponents() {
 
         jButton7 = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new BackgroundPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -165,6 +172,29 @@ public class Employee_Search_View extends javax.swing.JFrame {
         jTable1.setShowGrid(true);
         jTable1.setShowVerticalLines(false);
         jScrollPane1.setViewportView(jTable1);
+
+        // Fix status column width
+        try {
+            jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(90);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(140);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(120);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(170);
+        } catch (Exception e) {
+        }
+
+        try { jTable1.getColumnModel().getColumn(jTable1.getColumnCount()-1).setPreferredWidth(150); } catch (Exception e) { }
+
+
+        // Make Status column wider to show full text
+        try {
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(140);
+            jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        } catch (Exception e) {
+        }
+
         jTable1.getAccessibleContext().setAccessibleName("");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -295,7 +325,7 @@ public class Employee_Search_View extends javax.swing.JFrame {
         var emp = new Add_Employee();
         emp.setVisible(true);
         this.dispose();
-        
+
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -311,7 +341,7 @@ public class Employee_Search_View extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-          var Report = new LeaveRequests();
+        var Report = new LeaveRequests();
         Report.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -326,7 +356,7 @@ public class Employee_Search_View extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-       var REPOR = new REPOR();
+        var REPOR = new Report();
         REPOR.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed

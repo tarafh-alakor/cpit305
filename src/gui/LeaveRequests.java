@@ -5,11 +5,13 @@
 package gui;
 
 /**
- *
- * @author pc
+ * LeaveRequests - Displays and manages employee leave requests. Loads requests
+ * from the database with dynamic filtering by type and status. Uses ActionsCell
+ * to embed Approve/Deny buttons in the table rows. IOStream: indirectly via
+ * LoggerUtil for audit logging.
  */
 public class LeaveRequests extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(LeaveRequests.class.getName());
 
     /**
@@ -17,29 +19,69 @@ public class LeaveRequests extends javax.swing.JFrame {
      */
     public LeaveRequests() {
         initComponents();
-        ActionsCell.apply(jTable1, 6);
+        
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+ActionsCell.apply(jTable1, 6);
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         jTable1.getColumnModel().getColumn(6).setMinWidth(180);
-        jTable1.getColumnModel().getColumn(6).setMaxWidth(220);
+        jTable1.getColumnModel().getColumn(6).setPreferredWidth(220);
         loadLeaveRequests();
 
+        // Fix placeholder text: clear on focus, restore on blur
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (jTextField1.getText().equals("Search by Employee Name")) {
+                    jTextField1.setText("");
+                    jTextField1.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (jTextField1.getText().trim().isEmpty()) {
+                    jTextField1.setText("Search by Employee Name");
+                    jTextField1.setForeground(java.awt.Color.GRAY);
+                    loadLeaveRequests();
+                }
+            }
+        });
+
+        // Live search on key release
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                if (!jTextField1.getText().equals("Search by Employee Name")) {
+                    loadLeaveRequests();
+                }
+            }
+        });
+
+        jTextField1.setForeground(java.awt.Color.GRAY);
     }
 
     private void loadLeaveRequests() {
         try {
             java.sql.Connection con = database.DBConnection.getConnection();
-     
+
             String keyword = jTextField1.getText().trim();
             String type = jComboBox1.getSelectedItem().toString();
             String status = jComboBox2.getSelectedItem().toString();
 
-           // String sql = "SELECT * FROM leave_requests WHERE emp_name LIKE ?";
-
             if (keyword.equals("Search by Employee Name")) {
                 keyword = "";
             }
-          String sql = "SELECT * FROM leave_requests WHERE 1=1";
-          
-            // Dynamic filters
+            String sql = "SELECT * FROM leave_requests WHERE 1=1";
+
+            // Dynamic filters based on user selections
+            if (!keyword.isEmpty()) {
+                sql += " AND emp_name LIKE ?";
+            }
+
             if (!type.equals("All")) {
                 sql += " AND leave_type = ?";
             }
@@ -61,7 +103,7 @@ public class LeaveRequests extends javax.swing.JFrame {
             if (!status.equals("All")) {
                 ps.setString(index++, status);
             }
-            
+
             java.sql.ResultSet rs = ps.executeQuery();
 
             javax.swing.table.DefaultTableModel model
@@ -70,15 +112,14 @@ public class LeaveRequests extends javax.swing.JFrame {
             model.setRowCount(0);
 
             while (rs.next()) {
- 
-               // String dateRange = rs.getDate("start_date") + " - " + rs.getDate("end_date");
+
+                String dateRange = rs.getDate("start_date") + " - " + rs.getDate("end_date");
 
                 model.addRow(new Object[]{
-                    rs.getInt("leave_id"), // FIXED column name
+                    rs.getInt("id"),
                     rs.getString("emp_name"),
                     rs.getString("leave_type"),
-                    rs.getDate("leave_date"), 
-                    // dateRange,
+                    dateRange,
                     rs.getInt("total_days"),
                     rs.getString("status"),
                     "Actions"
@@ -89,8 +130,7 @@ public class LeaveRequests extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Error loading leave requests: " + e.getMessage());
         }
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,7 +140,7 @@ public class LeaveRequests extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new BackgroundPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
@@ -122,7 +162,6 @@ public class LeaveRequests extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 700));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1000, 700));
@@ -137,7 +176,7 @@ public class LeaveRequests extends javax.swing.JFrame {
         jTextField1.setText("Search by Employee Name");
         jTextField1.addActionListener(this::jTextField1ActionPerformed);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Annual", "Sick", "Unpaid", "" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Annual Leave", "Sick Leave", "Emergency Leave", "Vacation Leave", " ", " " }));
         jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Pending", "Approved", "Rejected" }));
@@ -207,6 +246,23 @@ public class LeaveRequests extends javax.swing.JFrame {
         ));
         jTable1.setGridColor(new java.awt.Color(255, 255, 255));
         jScrollPane1.setViewportView(jTable1);
+
+        // Keep full table text visible with horizontal scrolling
+        try {
+            jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            jScrollPane1.setVerticalScrollBarPolicy(javax.swing.JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+            jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(130); // Request ID
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(180); // Employee Name
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(140); // Type
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(170); // Dates
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(120); // Total Days
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(160); // Status
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(220); // Actions
+        } catch (Exception e) {
+        }
+
 
         jLabel4.setBackground(new java.awt.Color(255, 255, 255));
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -349,12 +405,12 @@ public class LeaveRequests extends javax.swing.JFrame {
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
         // TODO add your handling code here:
-         loadLeaveRequests();
+        loadLeaveRequests();
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
-         loadLeaveRequests();
+        loadLeaveRequests();
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -392,7 +448,7 @@ public class LeaveRequests extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
-        var REPOR = new REPOR();
+        var REPOR = new Report();
         REPOR.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton6ActionPerformed

@@ -5,11 +5,12 @@
 package gui;
 
 /**
- *
- * @author mawad
+ * ForgotPass - Password recovery screen. Accepts the user's registered email
+ * address and checks it against the database. If found, navigates to the
+ * confirmPass confirmation screen.
  */
 public class ForgotPass extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ForgotPass.class.getName());
 
     /**
@@ -17,6 +18,33 @@ public class ForgotPass extends javax.swing.JFrame {
      */
     public ForgotPass() {
         initComponents();
+        
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+addPlaceholder(jTextField3, "Enter your registered email");
+    }
+
+    private void addPlaceholder(javax.swing.JTextField field, String ph) {
+        field.setText(ph);
+        field.setForeground(java.awt.Color.GRAY);
+        field.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (field.getText().equals(ph)) {
+                    field.setText("");
+                    field.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (field.getText().trim().isEmpty()) {
+                    field.setText(ph);
+                    field.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
     }
 
     /**
@@ -28,7 +56,7 @@ public class ForgotPass extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new BackgroundPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -140,20 +168,20 @@ public class ForgotPass extends javax.swing.JFrame {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-        var login = new Login(); 
+        var login = new Login();
         login.setVisible(true);
-       
+
         this.dispose();
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
+
         try {
             String email = jTextField3.getText();
 
-            if (email.isEmpty()) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Enter your email");
+            if (email.isEmpty() || email.equals("Enter your registered email")) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Please enter your email address");
                 return;
             }
 
@@ -175,7 +203,7 @@ public class ForgotPass extends javax.swing.JFrame {
         } catch (Exception e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
-       
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

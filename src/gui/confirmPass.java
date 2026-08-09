@@ -5,11 +5,12 @@
 package gui;
 
 /**
- *
- * @author mawad
+ * confirmPass - Confirmation screen shown after a password reset email is
+ * requested. Displays a success message informing the user to check their
+ * email. The "Back to Login" link navigates back to the Login screen.
  */
 public class confirmPass extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(confirmPass.class.getName());
 
     /**
@@ -17,7 +18,11 @@ public class confirmPass extends javax.swing.JFrame {
      */
     public confirmPass() {
         initComponents();
-    }
+    
+        // Apply visual styling only.
+        getContentPane().setBackground(new java.awt.Color(250, 255, 252));
+        VisualStyle.apply(getContentPane());
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,7 +33,7 @@ public class confirmPass extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new BackgroundPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
